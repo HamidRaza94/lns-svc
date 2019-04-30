@@ -1,4 +1,4 @@
-import IVersionableQuery from '../versionable/IQuery';
+import { IVersionableQuery } from '../versionable';
 
 interface IUpdateData extends IVersionableQuery {
   type?: string;
@@ -13,7 +13,6 @@ interface IUpdateConditions extends IVersionableQuery {
 }
 
 interface IUpdateProjection {
-  _id?: number;
   originalId?: number;
   type?: number;
   headline?: number;
