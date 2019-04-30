@@ -31,7 +31,7 @@ const updateValidation = {
     limit: {
       in: ['query'],
       isNumber: true,
-      default: 5,
+      default: 10,
       isRequired: false
     },
 

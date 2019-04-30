@@ -1,4 +1,4 @@
-import Server from './Server';
+import Server from './libs/Server';
 import { config } from './config';
 
 const initServer = () => {

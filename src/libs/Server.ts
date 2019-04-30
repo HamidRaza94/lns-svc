@@ -2,9 +2,9 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 
-import { IConfig } from './config';
-import { notFoundRoute, errorHandler, Database } from './libs';
-import router from './router';
+import { IConfig } from '../config';
+import { notFoundRoute, errorHandler, Database } from '.';
+import { router } from '../router';
 
 class Server {
   public app: express.Express;
