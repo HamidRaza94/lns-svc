@@ -11,7 +11,7 @@ class VersionableRepository<
 > {
   constructor(private model: M) {}
 
-  private static generateObjectId(): string {
+  public static generateObjectId(): string {
     return String(Types.ObjectId());
   }
 
@@ -19,11 +19,11 @@ class VersionableRepository<
     return await this.model.countDocuments();
   }
 
-  public async create(data: IData) {
-    const id: string = VersionableRepository.generateObjectId();
+  public async create(data: IData, id?: string) {
+    const originalId = id ? id : VersionableRepository.generateObjectId();
     const modelModified = new this.model({
-      _id: id,
-      originalId: id,
+      _id: originalId,
+      originalId,
       ...data
     });
 

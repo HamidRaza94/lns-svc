@@ -29,6 +29,26 @@ export default config => (req: Request, res: Response, next: NextFunction) => {
       }
     }
 
+    if (items && items.isBoolean) {
+      if (validatedValue[0] && typeof validatedValue[0] !== 'boolean') {
+        return next({
+          error: 'BAD_REQUEST',
+          message: `${key} field should be true or false`,
+          status: 400
+        });
+      }
+    }
+
+    if (items && items.isObject) {
+      if (validatedValue[0] && typeof validatedValue[0] !== 'object') {
+        return next({
+          error: 'BAD_REQUEST',
+          message: `${key} should be object`,
+          status: 400
+        });
+      }
+    }
+
     if (items && items.isNumber) {
       if (validatedValue[0] && isNaN(validatedValue[0])) {
         return next({
@@ -62,13 +82,49 @@ export default config => (req: Request, res: Response, next: NextFunction) => {
       }
     }
 
-    if (items && items.isObject) {
-      if (validatedValue[0] && typeof validatedValue[0] !== 'object') {
-        return next({
-          error: 'BAD_REQUEST',
-          message: `${key} should be object`,
-          status: 400
-        });
+    if (items && items.length) {
+      if (validatedValue[0]) {
+        if (
+          items.length.value &&
+          validatedValue[0].toString().length !== items.length.value
+        ) {
+          return next({
+            error: 'BAD_REQUEST',
+            message: `${key} should be equal ${items.length.value}`,
+            status: 400
+          });
+        } else if (
+          items.length.max &&
+          items.length.min &&
+          (validatedValue[0].toString().length > items.length.max ||
+            validatedValue[0].toString().length < items.length.min)
+        ) {
+          return next({
+            error: 'BAD_REQUEST',
+            message: `${key} should be between ${items.length.min} and ${
+              items.length.max
+            }`,
+            status: 400
+          });
+        } else if (
+          items.length.max &&
+          validatedValue[0].toString().length > items.length.max
+        ) {
+          return next({
+            error: 'BAD_REQUEST',
+            message: `${key} should be lesser than equal ${items.length.max}`,
+            status: 400
+          });
+        } else if (
+          items.length.min &&
+          validatedValue[0].toString().length < items.length.min
+        ) {
+          return next({
+            error: 'BAD_REQUEST',
+            message: `${key} should be lesser than equal ${items.length.min}`,
+            status: 400
+          });
+        }
       }
     }
 

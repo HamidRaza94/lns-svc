@@ -1,5 +1,3 @@
-export { successHandler, notFoundRoute, errorHandler } from './routes';
-export { default as Database } from './Database';
 export {
   UPDATE_TYPE,
   NAME_REGEX,
@@ -13,4 +11,4 @@ export {
   MARITAL_STATUS,
   RELIGION,
   CATEGORY
-} from './extra';
+} from './constants';

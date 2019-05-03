@@ -1,8 +1,10 @@
+import { UPDATE_TYPE, MONGO_REGEX } from '../../libs';
+
 const updateValidation = {
   create: {
     type: {
       in: ['body'],
-      isIn: ['news', 'link', 'notice'],
+      isIn: UPDATE_TYPE,
       isRequired: true,
       isString: true
     },
@@ -23,7 +25,7 @@ const updateValidation = {
   read: {
     type: {
       in: ['params'],
-      isIn: ['news', 'link', 'notice'],
+      isIn: UPDATE_TYPE,
       isRequired: false,
       isString: true
     },
@@ -46,7 +48,7 @@ const updateValidation = {
   update: {
     id: {
       in: ['body'],
-      regex: /^[0-9a-fA-F]{24}$/,
+      regex: MONGO_REGEX,
       isRequired: true
     },
 
@@ -60,7 +62,7 @@ const updateValidation = {
   delete: {
     id: {
       in: ['params'],
-      regex: /^[0-9a-fA-F]{24}$/,
+      regex: MONGO_REGEX,
       isRequired: true
     }
   }
