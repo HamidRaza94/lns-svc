@@ -14,3 +14,4 @@ export {
   RELIGION,
   CATEGORY
 } from './extra';
+export { arrayMerger } from './extra';

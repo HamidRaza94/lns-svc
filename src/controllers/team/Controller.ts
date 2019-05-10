@@ -6,7 +6,7 @@ import { successHandler } from '../../libs';
 class TeamController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await teamMiddleware.create(req.body);
+      const result = await teamMiddleware.create(req);
       res.status(201).send(successHandler('Successfully Created', 201, result));
     } catch ({ error, message, status }) {
       next({
@@ -19,7 +19,8 @@ class TeamController {
 
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
-      res.status(200).send(successHandler('Successfully Fetched', 200, ''));
+      const result = await teamMiddleware.read(req);
+      res.status(200).send(successHandler('Successfully Fetched', 200, result));
     } catch ({ error, message, status }) {
       next({
         error,
@@ -31,7 +32,8 @@ class TeamController {
 
   public async update(req: Request, res: Response, next: NextFunction) {
     try {
-      res.status(201).send(successHandler('Successfully Updated', 201, ''));
+      const result = await teamMiddleware.update(req);
+      res.status(201).send(successHandler('Successfully Updated', 201, result));
     } catch ({ error, message, status }) {
       next({
         error,
@@ -43,7 +45,8 @@ class TeamController {
 
   public async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      res.status(200).send(successHandler('Successfully Fetched', 200, ''));
+      const result = await teamMiddleware.delete(req);
+      res.status(200).send(successHandler('Successfully Fetched', 200, result));
     } catch ({ error, message, status }) {
       next({
         error,

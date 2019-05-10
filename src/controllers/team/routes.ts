@@ -9,7 +9,12 @@ const router = Router();
 router
   .post('/', validationHandler(teamValidation.create), teamController.create)
   .get('/', validationHandler(teamValidation.read), teamController.read)
+  .get('/:id', validationHandler(teamValidation.read), teamController.read)
   .put('/', validationHandler(teamValidation.update), teamController.update)
-  .delete('/', validationHandler(teamValidation.delete), teamController.delete);
+  .delete(
+    '/:id',
+    validationHandler(teamValidation.delete),
+    teamController.delete
+  );
 
 export default router;

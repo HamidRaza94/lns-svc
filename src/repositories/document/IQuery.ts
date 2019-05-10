@@ -1,11 +1,12 @@
 import { IVersionableQuery } from '../versionable';
 
 interface IDocumentData extends IVersionableQuery {
-  aadhar: string;
-  pan: string;
+  aadhar?: string;
+  pan?: string;
 }
 
 interface IDocumentConditions extends IVersionableQuery {
+  originalId?: string;
   aadhar?: string;
   pan?: string;
 }

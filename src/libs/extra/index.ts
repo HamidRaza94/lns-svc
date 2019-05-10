@@ -12,3 +12,5 @@ export {
   RELIGION,
   CATEGORY
 } from './constants';
+
+export { arrayMerger } from './utils';

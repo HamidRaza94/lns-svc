@@ -15,6 +15,7 @@ interface IPersonalDetailData extends IVersionableQuery {
 }
 
 interface IPersonalDetailConditions extends IVersionableQuery {
+  originalId?: string;
   name?: string;
   fatherHusbandName?: string;
   sex?: string;

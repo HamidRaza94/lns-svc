@@ -9,6 +9,7 @@ interface IContactDetailData extends IVersionableQuery {
 }
 
 interface IContactDetailConditions extends IVersionableQuery {
+  originalId?: string;
   email?: string;
   phone?: string;
   address?: string;

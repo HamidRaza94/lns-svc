@@ -31,6 +31,14 @@ export {
 } from './personalDetail';
 
 export {
+  teamRepository,
+  ITeamData,
+  ITeamConditions,
+  ITeamProjection,
+  ITeamOptions
+} from './team';
+
+export {
   updateRepository,
   IUpdateData,
   IUpdateConditions,

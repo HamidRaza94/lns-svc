@@ -46,9 +46,9 @@ class VersionableRepository<
     options?: IOptions
   ): DocumentQuery<D[], D> {
     conditions.deletedAt = undefined;
-    const doc = await this.model.find(conditions, projection, options);
+    const doc = await this.model.find(conditions, projection, options).lean();
 
-    if (doc.length === 0 || !doc) {
+    if (!doc) {
       throw {
         error: 'Not Found',
         message: 'Data Not Present',
