@@ -4,9 +4,9 @@ import validationHandler from '../../libs/routes/validationHandler';
 import contactValidation from './validation';
 import contactController from './Controller';
 
-const router = Router();
+const contactRouter = Router();
 
-router
+contactRouter
   .post(
     '/',
     validationHandler(contactValidation.create),
@@ -14,4 +14,4 @@ router
   )
   .get('/', validationHandler(contactValidation.read), contactController.read);
 
-export default router;
+export default contactRouter;

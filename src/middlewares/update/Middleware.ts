@@ -2,11 +2,11 @@ import { Request } from 'express';
 
 import {
   updateRepository,
+  IUpdateData,
   IUpdateConditions,
   IUpdateProjection,
   IUpdateOptions
 } from '../../repositories';
-import IUpdateData from './IData';
 
 class UpdateMiddleware {
   public async create(req: Request) {

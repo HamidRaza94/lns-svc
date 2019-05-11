@@ -1,6 +1,6 @@
 import { IVersionableQuery, IVersionableProjection } from '../versionable';
 
-interface ITeamData extends IVersionableQuery {
+interface IMemberData extends IVersionableQuery {
   name: string,
   fatherHusbandName: string,
   sex: string,
@@ -19,9 +19,10 @@ interface ITeamData extends IVersionableQuery {
   pincode: number,
   aadhaar?: string,
   pan?: string,
+  amount: number,
 }
 
-interface ITeamConditions extends IVersionableQuery {
+interface IMemberConditions extends IVersionableQuery {
   originalId?: String;
   name?: string,
   fatherHusbandName?: string,
@@ -40,7 +41,7 @@ interface ITeamConditions extends IVersionableQuery {
   pincode?: number,
 }
 
-interface ITeamProjection extends IVersionableProjection {
+interface IMemberProjection extends IVersionableProjection {
   originalId?: String;
   name?: string,
   fatherHusbandName?: string,
@@ -60,11 +61,12 @@ interface ITeamProjection extends IVersionableProjection {
   pincode?: number,
   aadhaar?: string,
   pan?: string,
+  amount?: number,
 }
 
-interface ITeamOptions {
+interface IMemberOptions {
   limit?: Number;
   skip?: Number;
 }
 
-export { ITeamData, ITeamConditions, ITeamProjection, ITeamOptions };
+export { IMemberData, IMemberConditions, IMemberProjection, IMemberOptions };

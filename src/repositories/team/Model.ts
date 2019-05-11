@@ -4,17 +4,7 @@ import TeamSchema from './Schema';
 import ITeamModel from './IModel';
 
 const options: SchemaOptions = {
-  toJSON: {
-    transform: (doc, ret) => {
-      delete ret.__V;
-    }
-  },
-
-  toObject: {
-    transform: (doc, ret) => {
-      delete ret.__V;
-    }
-  }
+  versionKey: false,
 };
 
 const schema: Schema = new TeamSchema(options);

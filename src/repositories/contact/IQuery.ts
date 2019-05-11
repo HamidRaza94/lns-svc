@@ -1,4 +1,4 @@
-import { IVersionableQuery } from '../versionable';
+import { IVersionableQuery, IVersionableProjection } from '../versionable';
 
 interface IContactData extends IVersionableQuery {
   name: string;
@@ -13,7 +13,7 @@ interface IContactConditions extends IVersionableQuery {
   phone?: string;
 }
 
-interface IContactProjection {
+interface IContactProjection extends IVersionableProjection {
   originalId?: number;
   name?: number;
   email?: number;

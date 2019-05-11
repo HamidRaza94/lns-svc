@@ -1,14 +1,14 @@
 import { Request } from 'express';
 
 import {
-  teamRepository,
-  ITeamData,
-  ITeamConditions,
-  ITeamProjection,
-  ITeamOptions,
+  memberRepository,
+  IMemberData,
+  IMemberConditions,
+  IMemberProjection,
+  IMemberOptions,
 } from '../../repositories';
 
-class TeamMiddleware {
+class MemberMiddleware {
   public async create(req: Request) {
     const {
       body: {
@@ -29,11 +29,12 @@ class TeamMiddleware {
         state,
         pincode,
         aadhaar,
-        pan
+        pan,
+        amount,
       }
     } = req;
 
-    const data: ITeamData = {
+    const data: IMemberData = {
       name,
       fatherHusbandName,
       sex,
@@ -51,10 +52,11 @@ class TeamMiddleware {
       state,
       pincode,
       aadhaar,
-      pan
+      pan,
+      amount,
     }
 
-    const result = await teamRepository.create(data);
+    const result = await memberRepository.create(data);
 
     return result;
   }
@@ -83,9 +85,9 @@ class TeamMiddleware {
       }
     } = req;
 
-    const conditions: ITeamConditions = {};
-    const projection: ITeamProjection = {};
-    const options: ITeamOptions = {
+    const conditions: IMemberConditions = {};
+    const projection: IMemberProjection = {};
+    const options: IMemberOptions = {
       limit: parseInt(limit),
       skip: parseInt(skip),
     };
@@ -154,7 +156,7 @@ class TeamMiddleware {
       conditions.pincode = pincode;
     }
 
-    const result = await teamRepository.find(conditions, projection, options);
+    const result = await memberRepository.find(conditions, projection, options);
 
     return result;
   }
@@ -164,8 +166,8 @@ class TeamMiddleware {
       body: { id, dataToUpdate },
     } = req;
 
-    const conditions: ITeamConditions = { originalId: id };
-    return await teamRepository.update(conditions, dataToUpdate);
+    const conditions: IMemberConditions = { originalId: id };
+    return await memberRepository.update(conditions, dataToUpdate);
   }
 
   public async delete(req: Request) {
@@ -173,9 +175,9 @@ class TeamMiddleware {
       params: { id }
     } = req;
 
-    const conditions: ITeamConditions = { originalId: id };
-    return await teamRepository.delete(conditions);
+    const conditions: IMemberConditions = { originalId: id };
+    return await memberRepository.delete(conditions);
   }
 }
 
-export default new TeamMiddleware();
+export default new MemberMiddleware();

@@ -1,10 +1,10 @@
 import {
   contactRepository,
+  IContactData,
   IContactConditions,
   IContactProjection,
   IContactOptions
 } from '../../repositories';
-import IContactData from './IData';
 
 class ContactMiddleware {
   public async create(data: any) {

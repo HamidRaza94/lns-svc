@@ -3,7 +3,7 @@ const UPDATE_TYPE: string[] = ['news', 'link', 'notice'];
 
 // Regex
 const NAME_REGEX: RegExp = /^[a-zA-Z ]*$/;
-const EMAIL_REGEX: RegExp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+const EMAIL_REGEX: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
 const PHONE_REGEX: RegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 const DOB_REGEX: RegExp = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/;
 const AADHAR_REGEX: RegExp = /^\d{4}\s\d{4}\s\d{4}$/;

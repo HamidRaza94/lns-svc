@@ -4,17 +4,7 @@ import ContactSchema from './Schema';
 import IContactModel from './IModel';
 
 const options: SchemaOptions = {
-  toJSON: {
-    transform: (doc, ret) => {
-      delete ret.__V;
-    }
-  },
-
-  toObject: {
-    transform: (doc, ret) => {
-      delete ret.__V;
-    }
-  }
+  versionKey: false,
 };
 
 const schema: Schema = new ContactSchema(options);

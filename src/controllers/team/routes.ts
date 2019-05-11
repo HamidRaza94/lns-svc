@@ -4,9 +4,9 @@ import validationHandler from '../../libs/routes/validationHandler';
 import teamValidation from './validation';
 import teamController from './Controller';
 
-const router = Router();
+const teamRouter = Router();
 
-router
+teamRouter
   .post('/', validationHandler(teamValidation.create), teamController.create)
   .get('/', validationHandler(teamValidation.read), teamController.read)
   .get('/:id', validationHandler(teamValidation.read), teamController.read)
@@ -17,4 +17,4 @@ router
     teamController.delete
   );
 
-export default router;
+export default teamRouter;

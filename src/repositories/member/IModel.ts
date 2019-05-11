@@ -1,6 +1,6 @@
 import { IVersionableModel } from '../versionable';
 
-interface ITeamModel extends IVersionableModel {
+interface IMemberModel extends IVersionableModel {
   name: string,
   fatherHusbandName: string,
   sex: string,
@@ -19,6 +19,7 @@ interface ITeamModel extends IVersionableModel {
   pincode: number,
   aadhaar?: string,
   pan?: string,
+  amount: number,
 }
 
-export default ITeamModel;
+export default IMemberModel;

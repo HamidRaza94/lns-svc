@@ -2,7 +2,7 @@ import { SchemaDefinition, SchemaOptions } from 'mongoose';
 
 import { VersionableSchema } from '../versionable';
 
-class PersonalDetailSchema extends VersionableSchema {
+class MemberSchema extends VersionableSchema {
   constructor(options: SchemaOptions) {
     const baseSchema: SchemaDefinition = {
       name: String,
@@ -11,15 +11,23 @@ class PersonalDetailSchema extends VersionableSchema {
       maritalStatus: String,
       religion: String,
       category: String,
-      dateOfBirth: Date,
+      dateOfBirth: String,
       placeOfBirth: String,
       occupation: String,
       policeStation: String,
-      physicalStatus: Boolean
+      physicalStatus: Boolean,
+      email: String,
+      phone: Number,
+      address: String,
+      state: String,
+      pincode: Number,
+      aadhaar: String,
+      pan: String,
+      amount: Number,
     };
 
     super(baseSchema, options);
   }
 }
 
-export default PersonalDetailSchema;
+export default MemberSchema;

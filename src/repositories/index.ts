@@ -7,36 +7,20 @@ export {
 } from './contact';
 
 export {
-  contactDetailRepository,
-  IContactDetailData,
-  IContactDetailConditions,
-  IContactDetailProjection,
-  IContactDetailOptions
-} from './contactDetail';
-
-export {
-  documentRepository,
-  IDocumentData,
-  IDocumentConditions,
-  IDocumentProjection,
-  IDocumentOptions
-} from './document';
-
-export {
-  personalDetailRepository,
-  IPersonalDetailData,
-  IPersonalDetailConditions,
-  IPersonalDetailProjection,
-  IPersonalDetailOptions
-} from './personalDetail';
-
-export {
   teamRepository,
   ITeamData,
   ITeamConditions,
   ITeamProjection,
   ITeamOptions
 } from './team';
+
+export {
+  memberRepository,
+  IMemberData,
+  IMemberConditions,
+  IMemberProjection,
+  IMemberOptions
+} from './member';
 
 export {
   updateRepository,
