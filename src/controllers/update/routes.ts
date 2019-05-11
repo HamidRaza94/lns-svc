@@ -4,9 +4,9 @@ import validationHandler from '../../libs/routes/validationHandler';
 import updateValidation from './validation';
 import updateController from './Controller';
 
-const router = Router();
+const updateRouter = Router();
 
-router
+updateRouter
   .post(
     '/',
     validationHandler(updateValidation.create),
@@ -25,4 +25,4 @@ router
     updateController.delete
   );
 
-export default router;
+export default updateRouter;

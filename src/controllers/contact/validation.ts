@@ -1,22 +1,24 @@
+import { NAME_REGEX, EMAIL_REGEX, PHONE_REGEX } from '../../libs';
+
 const contactValidation = {
   create: {
     name: {
       in: ['body'],
-      regex: /^[a-zA-Z ]*$/,
+      regex: NAME_REGEX,
       isRequired: true,
       isString: true
     },
 
     email: {
       in: ['body'],
-      regex: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+      regex: EMAIL_REGEX,
       isRequired: true,
       isString: true
     },
 
     phone: {
       in: ['body'],
-      regex: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+      regex: PHONE_REGEX,
       isRequired: true,
       isNumber: true
     },
@@ -31,19 +33,19 @@ const contactValidation = {
   read: {
     name: {
       in: ['query'],
-      regex: /^[a-zA-Z ]*$/,
+      regex: NAME_REGEX,
       isString: true
     },
 
     email: {
       in: ['query'],
-      regex: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+      regex: EMAIL_REGEX,
       isString: true
     },
 
     phone: {
       in: ['query'],
-      regex: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+      regex: PHONE_REGEX,
       isNumber: true
     },
 

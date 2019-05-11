@@ -2,4 +2,8 @@ interface IVersionableQuery {
   deletedAt?: Date;
 }
 
-export default IVersionableQuery;
+interface IVersionableProjection {
+  _id?: number;
+}
+
+export { IVersionableQuery, IVersionableProjection };

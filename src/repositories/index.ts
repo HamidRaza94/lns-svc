@@ -7,6 +7,22 @@ export {
 } from './contact';
 
 export {
+  teamRepository,
+  ITeamData,
+  ITeamConditions,
+  ITeamProjection,
+  ITeamOptions
+} from './team';
+
+export {
+  memberRepository,
+  IMemberData,
+  IMemberConditions,
+  IMemberProjection,
+  IMemberOptions
+} from './member';
+
+export {
   updateRepository,
   IUpdateData,
   IUpdateConditions,

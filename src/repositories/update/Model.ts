@@ -4,17 +4,7 @@ import UpdateSchema from './Schema';
 import IUpdateModel from './IModel';
 
 const options: SchemaOptions = {
-  toObject: {
-    transform: (doc, ret) => {
-      delete ret.__v;
-    }
-  },
-
-  toJSON: {
-    transform: (doc, ret) => {
-      delete ret.__v;
-    }
-  }
+  versionKey: false,
 };
 
 const schema: Schema = new UpdateSchema(options);

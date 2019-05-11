@@ -1,17 +1,17 @@
 import { Document, DocumentQuery, Model, Types } from 'mongoose';
-import IVersionableQuery from './IQuery';
+import { IVersionableQuery, IVersionableProjection } from './IQuery';
 
 class VersionableRepository<
   D extends Document,
   M extends Model<D[], D>,
   IData extends IVersionableQuery,
   IConditions extends IVersionableQuery,
-  IProjection,
+  IProjection extends IVersionableProjection,
   IOptions
 > {
   constructor(private model: M) {}
 
-  private static generateObjectId(): string {
+  public static generateObjectId(): string {
     return String(Types.ObjectId());
   }
 
@@ -20,7 +20,8 @@ class VersionableRepository<
   }
 
   public async create(data: IData) {
-    const id: string = VersionableRepository.generateObjectId();
+    const id = VersionableRepository.generateObjectId();
+
     const modelModified = new this.model({
       _id: id,
       originalId: id,
@@ -46,9 +47,10 @@ class VersionableRepository<
     options?: IOptions
   ): DocumentQuery<D[], D> {
     conditions.deletedAt = undefined;
-    const doc = await this.model.find(conditions, projection, options);
+    projection._id = 0;
+    const doc = await this.model.find(conditions, projection, options).lean();
 
-    if (doc.length === 0 || !doc) {
+    if (!doc) {
       throw {
         error: 'Not Found',
         message: 'Data Not Present',
@@ -64,8 +66,8 @@ class VersionableRepository<
     dataToUpdate: IData,
     options?: IOptions
   ) {
-    const prevDoc = await this.find(conditions);
-    const newDoc = prevDoc[0].toObject();
+    const prevDoc = await this.findOne(conditions);
+    const newDoc = {...prevDoc};
     const curDate = new Date();
 
     prevDoc.deletedAt = curDate;
@@ -89,9 +91,29 @@ class VersionableRepository<
   }
 
   public async delete(conditions: IConditions) {
-    await this.find(conditions);
+    await this.findOne(conditions);
     const dataToUpdate = { deletedAt: new Date() } as IData;
     return await this.updateOne(conditions, dataToUpdate);
+  }
+
+  public async findOne(
+    conditions?: IConditions,
+    projection?: IProjection,
+    options?: IOptions
+  ): DocumentQuery<D[], D> {
+    conditions.deletedAt = undefined;
+    projection._id = 0;
+    const doc = await this.model.findOne(conditions, projection, options).lean();
+
+    if (!doc) {
+      throw {
+        error: 'Not Found',
+        message: 'Data Not Present',
+        status: 404
+      };
+    }
+
+    return doc;
   }
 
   public async updateOne(
