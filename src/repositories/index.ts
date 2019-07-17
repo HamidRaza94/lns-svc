@@ -7,6 +7,14 @@ export {
 } from './contact';
 
 export {
+  grievanceRepository,
+  IGrievanceData,
+  IGrievanceConditions,
+  IGrievanceProjection,
+  IGrievanceOptions,
+} from './grievance';
+
+export {
   teamRepository,
   ITeamData,
   ITeamConditions,
