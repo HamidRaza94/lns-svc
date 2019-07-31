@@ -10,6 +10,7 @@ const configuration: IConfig = Object.freeze({
   PORT: envVars.PORT,
   NODE_ENV: envVars.NODE_ENV,
   MONGO_URI: envVars.MONGO_URI,
+  API_KEY: envVars.API_KEY,
 });
 
 export default configuration;
