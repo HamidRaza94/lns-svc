@@ -25,6 +25,7 @@ enrollmentRouter
   )
   .delete(
     '/:id',
-  )
+    enrollmentController.delete,
+  );
 
 export default enrollmentRouter;

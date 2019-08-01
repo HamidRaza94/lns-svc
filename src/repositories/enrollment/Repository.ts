@@ -29,6 +29,10 @@ class EnrollmentRepository extends VersionableRepository<
   public update(conditions: IEnrollmentConditions, dataToUpdate: IEnrollmentData, options?: IOptions) {
     return super.update(conditions, dataToUpdate, options);
   }
+
+  public delete(conditions: IEnrollmentConditions) {
+    return super.delete(conditions);
+  }
 }
 
 export default new EnrollmentRepository();

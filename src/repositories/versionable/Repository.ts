@@ -137,6 +137,10 @@ class VersionableRepository<
       };
     }
 
+    if (doc.ok) {
+      return 'success'
+    }
+
     return doc;
   }
 }

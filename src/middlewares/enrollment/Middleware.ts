@@ -18,6 +18,10 @@ class EnrollmentMiddleware {
   public async update(conditions: IEnrollmentConditions, dataToUpdate: IEnrollmentData, options?: IOptions) {
     return await enrollmentRepository.update(conditions, dataToUpdate, options);
   }
+
+  public async delete(conditions: IEnrollmentConditions) {
+    return await enrollmentRepository.delete(conditions);
+  }
 }
 
 export default new EnrollmentMiddleware();

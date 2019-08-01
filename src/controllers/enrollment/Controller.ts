@@ -78,6 +78,21 @@ class EnrollmentController {
       })
     }
   }
+
+  public async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { params: { id } } = req;
+
+      const result = await enrollmentMiddleware.delete({ originalId: id });
+      res.status(200).send(successHandler('Successfully Deleted', 200, result));
+    } catch ({ error, message, status }) {
+      next({
+        error,
+        message,
+        status,
+      })
+    }
+  }
 }
 
 export default new EnrollmentController();
