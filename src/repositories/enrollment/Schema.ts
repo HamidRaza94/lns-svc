@@ -5,7 +5,6 @@ import { VersionableSchema } from '../versionable';
 class EnrollmentSchema extends VersionableSchema {
   constructor() {
     const baseSchema: SchemaDefinition = {
-      enrollmentId: String,
       name: String,
       fatherHusbandName: String,
       address: String,

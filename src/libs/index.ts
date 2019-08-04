@@ -14,4 +14,4 @@ export {
   RELIGION,
   CATEGORY
 } from './extra';
-export { arrayMerger } from './extra';
+export { arrayMerger, filterDefinedObject } from './extra';

@@ -7,20 +7,39 @@ class EnrollmentController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
       const {
-        enrollmentId,
         name,
         fatherHusbandName,
         address,
       } = req.body;
 
       const data = {
-        enrollmentId,
         name,
         fatherHusbandName,
         address,
       }
 
       const result = await enrollmentMiddleware.create(data);
+      res.status(201).send(successHandler('Successfully Enrolled', 201, result));
+    } catch ({ error, message, status }) {
+      next({
+        error,
+        message,
+        status,
+      });
+    }
+  }
+
+  public async bulkCreate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { body } = req;
+
+      const data = body.map(({ name, fatherHusbandName, address }) => ({
+        name,
+        fatherHusbandName,
+        address,
+      }));
+
+      const result = await enrollmentMiddleware.bulkCreate(data);
       res.status(201).send(successHandler('Successfully Enrolled', 201, result));
     } catch ({ error, message, status }) {
       next({

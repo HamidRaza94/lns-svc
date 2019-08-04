@@ -22,6 +22,10 @@ class EnrollmentRepository extends VersionableRepository<
     return super.create(data);
   }
 
+  public async bulkCreate(data: [IEnrollmentData]) {
+    return super.insertMany(data);
+  }
+
   public find(conditions?: IEnrollmentConditions, projection?: [string], options?: IOptions) {
     return super.find(conditions, projection, options);
   }

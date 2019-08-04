@@ -13,4 +13,4 @@ export {
   CATEGORY
 } from './constants';
 
-export { arrayMerger } from './utils';
+export { arrayMerger, filterDefinedObject } from './utils';

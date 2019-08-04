@@ -1,7 +1,6 @@
 import { IVersionableQuery, IVersionableProjection } from '../versionable';
 
 interface IEnrollmentData extends IVersionableQuery {
-  enrollmentId: string;
   name: string;
   fatherHusbandName: string;
   address: string;

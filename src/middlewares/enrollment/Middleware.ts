@@ -2,13 +2,16 @@ import {
   enrollmentRepository,
   IEnrollmentData,
   IEnrollmentConditions,
-  IEnrollmentProjection,
   IOptions,
 } from '../../repositories';
 
 class EnrollmentMiddleware {
   public async create(data: IEnrollmentData) {
     return await enrollmentRepository.create(data);
+  }
+  
+  public async bulkCreate(data: [IEnrollmentData]) {
+    return await enrollmentRepository.bulkCreate(data);
   }
 
   public async read(conditions?: IEnrollmentConditions, projection?: [string], options?: IOptions) {

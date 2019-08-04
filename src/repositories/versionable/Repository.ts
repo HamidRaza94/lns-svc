@@ -12,6 +12,10 @@ class VersionableRepository<
 > {
   constructor(private model: M) {}
 
+  private getFinalConditions(conditions: IConditions): IConditions {
+    return { ...conditions, deletedAt: undefined };
+  }
+
   private getFinalProjection(projection: [string]) {
     if (!projection) {
       return ['-_id'];
@@ -20,10 +24,6 @@ class VersionableRepository<
     }
 
     return [];
-  }
-
-  private getFinalConditions(conditions: IConditions): IConditions {
-    return { ...conditions, deletedAt: undefined };
   }
 
   private getFinalOptions(options: IOptions): any {
@@ -43,6 +43,28 @@ class VersionableRepository<
 
     const modelModified = new this.model({ _id: id, originalId: id, ...data });
     const doc = await modelModified.save();
+
+    if (!doc) {
+      throw {
+        error: 'Bad Request',
+        message: 'Data Not Created',
+        status: 400,
+      };
+    }
+
+    return doc;
+  }
+
+  public async insertMany(data: [IData]) {
+    const documents = [];
+
+    for (const document of data) {
+      const id = VersionableRepository.generateObjectId();
+      const newDocument = Object.assign(document, { _id: id, originalId: id });
+      documents.push(newDocument);
+    }
+
+    const doc = await this.model.insertMany(documents);
 
     if (!doc) {
       throw {
