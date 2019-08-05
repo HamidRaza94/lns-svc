@@ -2,11 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 
 export default config => (req: Request, res: Response, next: NextFunction) => {
   const keys = Object.keys(config);
-  keys.forEach(key => {
+  keys.forEach((key: string) => {
     const items = config[key];
-    const value = items.in.map((item: string) => {
-      return req[item][key];
-    });
+    const value = items.in.map((item: string) => req[item][key]);
     const validatedValue = value.filter((item: any) => item);
 
     if (items && items.isRequired) {
