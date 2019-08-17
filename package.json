@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean:dist": "rm -rf dist/*",
-    "nodemon": "nodemon ./dist",
-    "start": "npm run clean:dist && tsc-watch --project . --onSuccess \"npm run nodemon\""
+    "clean:build": "rm -rf build/*",
+    "nodemon": "nodemon ./build",
+    "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\""
   },
   "repository": {
     "type": "git",
