@@ -10,43 +10,36 @@ class EnrollmentController {
         name,
         fatherHusbandName,
         address,
+        phone,
       } = req.body;
 
       const data = {
         name,
         fatherHusbandName,
         address,
+        phone,
       }
 
       const result = await enrollmentMiddleware.create(data);
       res.status(201).send(successHandler('Successfully Enrolled', 201, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      });
+      next({ error, message, status });
     }
   }
 
   public async bulkCreate(req: Request, res: Response, next: NextFunction) {
     try {
-      const { body } = req;
-
-      const data = body.map(({ name, fatherHusbandName, address }) => ({
+      const data = req.body.map(({ name, fatherHusbandName, address, phone }) => ({
         name,
         fatherHusbandName,
         address,
+        phone,
       }));
 
       const result = await enrollmentMiddleware.bulkCreate(data);
       res.status(201).send(successHandler('Successfully Enrolled', 201, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      });
+      next({ error, message, status });
     }
   }
 
@@ -72,11 +65,7 @@ class EnrollmentController {
       const result = await enrollmentMiddleware.read(newConditions, projection, options);
       res.status(200).send(successHandler('Successfully Read', 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 
@@ -90,11 +79,7 @@ class EnrollmentController {
       const result = await enrollmentMiddleware.update({ originalId: id }, dataToUpdate);
       res.status(200).send(successHandler('Successfully Updated', 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 
@@ -105,11 +90,7 @@ class EnrollmentController {
       const result = await enrollmentMiddleware.delete({ originalId: id });
       res.status(200).send(successHandler('Successfully Deleted', 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 }

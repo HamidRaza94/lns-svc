@@ -8,6 +8,7 @@ class EnrollmentSchema extends VersionableSchema {
       name: String,
       fatherHusbandName: String,
       address: String,
+      phone: Number,
     };
 
     const baseOptions: SchemaOptions = {};

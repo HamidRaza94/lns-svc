@@ -1,4 +1,4 @@
-import { MONGO_REGEX, NAME_REGEX } from '../../libs';
+import { MONGO_REGEX, NAME_REGEX, PHONE_REGEX } from '../../libs';
 
 export default {
   create: {
@@ -20,6 +20,13 @@ export default {
       in: ['body'],
       isRequired: true,
       isString: true,
+    },
+
+    phone: {
+      in: ['body'],
+      regex: PHONE_REGEX,
+      isRequired: true,
+      isNumber: true,
     },
   },
 

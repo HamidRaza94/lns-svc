@@ -4,6 +4,7 @@ interface IEnrollmentData extends IVersionableQuery {
   name: string;
   fatherHusbandName: string;
   address: string;
+  phone: number;
 }
 
 interface IEnrollmentConditions extends IVersionableQuery {
@@ -11,6 +12,7 @@ interface IEnrollmentConditions extends IVersionableQuery {
   name?: string;
   fatherHusbandName?: string;
   address?: string;
+  phone?: number;
 }
 
 interface IEnrollmentProjection extends IVersionableProjection {
@@ -19,6 +21,7 @@ interface IEnrollmentProjection extends IVersionableProjection {
   name?: boolean;
   fatherHusbandName?: boolean;
   address?: boolean;
+  phone?: number;
 }
 
 export {
