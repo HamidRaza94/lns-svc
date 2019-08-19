@@ -1,9 +1,11 @@
+export { IOptions } from './entities';
+
 export {
   contactRepository,
   IContactData,
   IContactConditions,
   IContactProjection,
-  IContactOptions
+  IContactOptions,
 } from './contact';
 
 export {
@@ -19,7 +21,7 @@ export {
   ITeamData,
   ITeamConditions,
   ITeamProjection,
-  ITeamOptions
+  ITeamOptions,
 } from './team';
 
 export {
@@ -27,7 +29,7 @@ export {
   IMemberData,
   IMemberConditions,
   IMemberProjection,
-  IMemberOptions
+  IMemberOptions,
 } from './member';
 
 export {
@@ -35,5 +37,12 @@ export {
   IUpdateData,
   IUpdateConditions,
   IUpdateProjection,
-  IUpdateOptions
+  IUpdateOptions,
 } from './update';
+
+export {
+  enrollmentRepository,
+  IEnrollmentData,
+  IEnrollmentConditions,
+  IEnrollmentProjection,
+} from './enrollment';

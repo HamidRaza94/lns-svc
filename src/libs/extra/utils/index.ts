@@ -1,1 +1,1 @@
-export { arrayMerger } from './helper';
+export { arrayMerger, filterDefinedObject } from './helper';

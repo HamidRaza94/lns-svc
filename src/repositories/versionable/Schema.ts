@@ -1,7 +1,7 @@
 import { Schema, SchemaDefinition, SchemaOptions } from 'mongoose';
 
 class VersionableSchema extends Schema {
-  constructor(baseSchema: SchemaDefinition, options: SchemaOptions) {
+  constructor(baseSchema: SchemaDefinition, baseOptions: SchemaOptions) {
     const versionableSchema: SchemaDefinition = {
       _id: {
         type: String,
@@ -29,7 +29,12 @@ class VersionableSchema extends Schema {
       }
     };
 
+    const versionableOptions: SchemaOptions = {
+      versionKey: false,
+    }
+
     const schema: Schema = Object.assign(baseSchema, versionableSchema);
+    const options: SchemaOptions = Object.assign(baseOptions, versionableOptions);
     super(schema, options);
   }
 }

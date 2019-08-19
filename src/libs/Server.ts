@@ -23,13 +23,17 @@ class Server {
   public async run() {
     const {
       app,
-      config: { PORT, MONGO_URI }
+      config: { PORT, MONGO_URI },
     } = this;
 
     const isConnected = await Database.open(MONGO_URI);
 
     if (isConnected) {
-      app.listen(PORT, () => console.log(`App is running on port ${PORT}`));
+      app.listen(PORT, () => {
+        console.log('|--------------------------------|');
+        console.log(`| Server is running on port ${PORT} |`);
+        console.log('|--------------------------------|');
+      });
     } else {
       console.log('DB Connection Failure');
     }
@@ -44,20 +48,13 @@ class Server {
   }
 
   private setupRoutes() {
-    const { app } = this;
+    const {
+      app,
+      config: { API_KEY },
+    } = this;
 
-    app.use(
-      '/health-check',
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        res.status(200).send('I am Good');
-      }
-    );
-
-    app.use('/api', router);
+    app.use('/health-check', (_, res: express.Response) => { res.status(200).send('I am Good') });
+    app.use(`/${API_KEY}`, router);
     app.use(notFoundRoute);
     app.use(errorHandler);
   }

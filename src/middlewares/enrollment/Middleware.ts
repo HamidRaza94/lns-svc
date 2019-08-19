@@ -1,0 +1,30 @@
+import {
+  enrollmentRepository,
+  IEnrollmentData,
+  IEnrollmentConditions,
+  IOptions,
+} from '../../repositories';
+
+class EnrollmentMiddleware {
+  public async create(data: IEnrollmentData) {
+    return await enrollmentRepository.create(data);
+  }
+  
+  public async bulkCreate(data: [IEnrollmentData]) {
+    return await enrollmentRepository.bulkCreate(data);
+  }
+
+  public async read(conditions?: IEnrollmentConditions, projection?: [string], options?: IOptions) {
+    return await enrollmentRepository.find(conditions, projection, options);
+  }
+
+  public async update(conditions: IEnrollmentConditions, dataToUpdate: IEnrollmentData, options?: IOptions) {
+    return await enrollmentRepository.update(conditions, dataToUpdate, options);
+  }
+
+  public async delete(conditions: IEnrollmentConditions) {
+    return await enrollmentRepository.delete(conditions);
+  }
+}
+
+export default new EnrollmentMiddleware();

@@ -1,4 +1,5 @@
 interface IVersionableQuery {
+  originalId?: String;
   deletedAt?: Date;
 }
 
