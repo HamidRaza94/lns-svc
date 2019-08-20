@@ -6,7 +6,9 @@
   "scripts": {
     "clean:build": "rm -rf build/*",
     "nodemon": "nodemon ./build",
-    "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\""
+    "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "pre:build": "npm run clean:build",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

@@ -7,6 +7,7 @@ import {
   updateRouter,
   grievanceRouter,
   enrollmentRouter,
+  testRouter,
 } from '../controllers';
 
 const router = Router();
@@ -17,6 +18,7 @@ router
   .use('/contact', contactRouter)
   .use('/update', updateRouter)
   .use('/grievance', grievanceRouter)
-  .use('/enrollment', enrollmentRouter);
+  .use('/enrollment', enrollmentRouter)
+  .use('/test', testRouter);
 
 export default router;
