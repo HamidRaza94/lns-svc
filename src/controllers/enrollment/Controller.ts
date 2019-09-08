@@ -11,7 +11,14 @@ class EnrollmentController {
         fatherHusbandName,
         address,
         phone,
+        photo,
+        sign,
       } = req.body;
+
+      console.log('req is ', req);
+
+      console.log('photo is ', photo);
+      console.log('sign is ', sign);
 
       const data = {
         name,
