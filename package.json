@@ -8,7 +8,8 @@
     "build": "tsc",
     "clean:build": "rm -rf ./build",
     "nodemon": "nodemon ./build",
-    "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\""
+    "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "startup": "node ./dist/src/index.js"
   },
   "repository": {
     "type": "git",
