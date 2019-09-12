@@ -9,7 +9,7 @@
     "clean:build": "rm -rf ./build",
     "nodemon": "nodemon ./build",
     "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\"",
-    "startup": "node ./dist/src/index.js"
+    "startup": "node ./build/index.js"
   },
   "repository": {
     "type": "git",
