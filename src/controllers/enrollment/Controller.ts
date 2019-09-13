@@ -8,11 +8,26 @@ class EnrollmentController {
     try {
       const {
         name,
-        fatherHusbandName,
-        address,
+        fatherName,
+        sex,
+        maritalStatus,
+        dateOfBirth,
+        placeOfBirth,
+        category,
+        religion,
+        occupation,
+        physicalStatus,
+        email,
         phone,
+        policeStation,
+        state,
+        pincode,
+        address,
+        aadhaar,
+        pan,
         photo,
         sign,
+        paymentId,
       } = req.body;
 
       console.log('req is ', req);
@@ -22,9 +37,26 @@ class EnrollmentController {
 
       const data = {
         name,
-        fatherHusbandName,
-        address,
+        fatherName,
+        sex,
+        maritalStatus,
+        dateOfBirth,
+        placeOfBirth,
+        category,
+        religion,
+        occupation,
+        physicalStatus,
+        email,
         phone,
+        policeStation,
+        state,
+        pincode,
+        address,
+        aadhaar,
+        pan,
+        photo,
+        sign,
+        paymentId,
       }
 
       const result = await enrollmentMiddleware.create(data);

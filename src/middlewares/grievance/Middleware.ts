@@ -7,7 +7,6 @@ import {
 
 class GrievanceMiddleware {
   public async create(data: IGrievanceData) {
-    console.log(data);
     return await grievanceRepository.create(data);
   }
 

@@ -2,7 +2,7 @@ import { SchemaDefinition, SchemaOptions } from 'mongoose';
 
 import { VersionableSchema } from '../versionable';
 
-class EnrollmentSchema extends VersionableSchema {
+class TempEnrollmentSchema extends VersionableSchema {
   constructor() {
     const baseSchema: SchemaDefinition = {
       name: String,
@@ -10,22 +10,15 @@ class EnrollmentSchema extends VersionableSchema {
       sex: String,
       maritalStatus: String,
       dateOfBirth: String,
-      placeOfBirth: String,
-      category: String,
+      aadhaar: String,
       religion: String,
-      occupation: String,
-      physicalStatus: String,
+      category: String,
+      address: String,
       email: String,
       phone: String,
       policeStation: String,
       state: String,
       pincode: String,
-      address: String,
-      aadhaar: String,
-      pan: String,
-      photo: String,
-      sign: String,
-      paymentId: String,
     };
 
     const baseOptions: SchemaOptions = {};
@@ -34,4 +27,4 @@ class EnrollmentSchema extends VersionableSchema {
   }
 }
 
-export default EnrollmentSchema;
+export default TempEnrollmentSchema;
