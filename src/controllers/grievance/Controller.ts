@@ -6,9 +6,8 @@ import { successHandler } from '../../libs';
 class GrievanceController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      let { enrollmentId } = req.body;
-
       const {
+        enrollmentId,
         placeOfIncident,
         dateTimeIncident,
         summary,
