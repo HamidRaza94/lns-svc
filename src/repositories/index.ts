@@ -17,13 +17,6 @@ export {
 } from './grievance';
 
 export {
-  tempEnrollmentRepository,
-  ITempEnrollmentData,
-  ITempEnrollmentConditions,
-  ITempEnrollmentProjection,
-} from './tempEnrollment';
-
-export {
   teamRepository,
   ITeamData,
   ITeamConditions,
