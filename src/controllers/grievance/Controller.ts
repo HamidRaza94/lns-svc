@@ -6,13 +6,18 @@ import { successHandler } from '../../libs';
 class GrievanceController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
+      const { enrollmentId } = req.params;
+
       const {
-        enrollmentId,
         placeOfIncident,
         dateTimeIncident,
         summary,
-        attachment,
       } = req.body;
+
+      const attachment = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      }
 
       if (enrollmentId) {
         const grievanceData = {

@@ -5,7 +5,10 @@ interface IGrievanceData extends IVersionableQuery {
   placeOfIncident: string,
   dateTimeIncident: string,
   summary: string,
-  attachment: string,
+  attachment: {
+    data: any,
+    contentType: string,
+  },
 }
 
 interface IGrievanceConditions extends IVersionableQuery {

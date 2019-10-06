@@ -9,7 +9,10 @@ class GrievanceSchema extends VersionableSchema {
       placeOfIncident: String,
       dateTimeIncident: String,
       summary: String,
-      attachment: String,
+      attachment: {
+        data: Buffer,
+        contentType: String,
+      },
     };
 
     super(baseSchema, options);

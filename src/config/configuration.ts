@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import * as multer from 'multer';
 
 import IConfig from './IConfig';
 
@@ -12,6 +13,10 @@ const configuration: IConfig = Object.freeze({
   MONGO_URI: envVars.MONGO_URI,
   API_KEY: envVars.API_KEY,
   PRIVATE_KEY: envVars.PRIVATE_KEY,
+  CLOUDINARY_CLOUD_NAME: envVars.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: envVars.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: envVars.CLOUDINARY_API_SECRET,
+  MULTER: multer({ storage: multer.memoryStorage() }),
 });
 
 export default configuration;

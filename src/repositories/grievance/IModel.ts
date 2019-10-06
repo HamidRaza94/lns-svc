@@ -5,7 +5,10 @@ interface IGrievanceModel extends IVersionableModel {
   placeOfIncident: string,
   dateTimeIncident: string,
   summary: string,
-  attachment: string,
+  attachment: {
+    data: any,
+    contentType: string,
+  },
 }
 
 export default IGrievanceModel;
