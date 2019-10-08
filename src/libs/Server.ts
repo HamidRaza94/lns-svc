@@ -1,6 +1,8 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
+import multer from 'multer';
+import { config as cloudinaryConfig } from 'cloudinary';
 
 import { IConfig } from '../config';
 import { notFoundRoute, errorHandler, Database } from '.';
@@ -15,9 +17,22 @@ class Server {
 
   public bootstrap(): Server {
     this.initCors();
+    this.initCloudinaryStorage();
     this.initBodyParser();
     this.setupRoutes();
     return this;
+  }
+
+  private setupRoutes() {
+    const {
+      app,
+      config: { API_KEY },
+    } = this;
+
+    app.use('/health-check', (_, res: express.Response) => { res.status(200).send('I am Good') });
+    app.use(`/${API_KEY}`, router);
+    app.use(notFoundRoute);
+    app.use(errorHandler);
   }
 
   public async run() {
@@ -47,16 +62,18 @@ class Server {
     this.app.use(bodyParser.json());
   }
 
-  private setupRoutes() {
-    const {
-      app,
-      config: { API_KEY },
-    } = this;
+  private initCloudinaryStorage() {
+    const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = this.config;
 
-    app.use('/health-check', (_, res: express.Response) => { res.status(200).send('I am Good') });
-    app.use(`/${API_KEY}`, router);
-    app.use(notFoundRoute);
-    app.use(errorHandler);
+    this.app.use((_, __, next: express.NextFunction) => {
+      cloudinaryConfig({
+        cloud_name: CLOUDINARY_CLOUD_NAME,
+        api_key: CLOUDINARY_API_KEY,
+        api_secret: CLOUDINARY_API_SECRET,
+      });
+
+      next();
+    })
   }
 }
 

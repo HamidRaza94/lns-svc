@@ -1,53 +1,91 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { grievanceMiddleware } from '../../middlewares';
+import { enrollmentMiddleware, grievanceMiddleware } from '../../middlewares';
 import { successHandler } from '../../libs';
 
 class GrievanceController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
+      const { enrollmentId } = req.params;
+
       const {
-        name,
-        fatherName,
-        sex,
-        maritalStatus,
-        dateOfBirth,
-        aadhaar,
-        religion,
-        category,
-        address,
-        email,
-        phone,
-        policeStation,
-        state,
-        pincode,
         placeOfIncident,
         dateTimeIncident,
         summary,
       } = req.body;
 
-      const data = {
-        name,
-        fatherName,
-        sex,
-        maritalStatus,
-        dateOfBirth,
-        aadhaar,
-        religion,
-        category,
-        address,
-        email,
-        phone,
-        policeStation,
-        state,
-        pincode,
-        placeOfIncident,
-        dateTimeIncident,
-        summary,
+      const attachment = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
       }
 
-      const result = await grievanceMiddleware.create(data);
-      res.status(201).send(successHandler('Successfully Created', 201, result));
+      if (enrollmentId) {
+        const grievanceData = {
+          enrollmentId,
+          placeOfIncident,
+          dateTimeIncident,
+          summary,
+          attachment,
+        }
+
+        const result = await grievanceMiddleware.create(grievanceData);
+        res.status(201).send(successHandler('Successfully Registered Grievance', 201, result));
+      } else {
+        const {
+          name,
+          fatherName,
+          sex,
+          maritalStatus,
+          dateOfBirth,
+          aadhaar,
+          religion,
+          category,
+          email,
+          phone,
+          address,
+          policeStation,
+          state,
+          pincode,
+        } = req.body;
+
+        const enrollmentData = {
+          name,
+          fatherName,
+          sex,
+          maritalStatus,
+          dateOfBirth,
+          placeOfBirth: 'Not Provided',
+          category,
+          religion,
+          occupation: 'Not Provided',
+          physicalStatus: 'Not Provided',
+          email,
+          phone,
+          policeStation,
+          state,
+          pincode,
+          address,
+          aadhaar,
+          pan: 'Not Provided',
+          photo: 'Not Provided',
+          sign: 'Not Provided',
+          paymentId: '',
+        }
+
+        const enrollmentResult = await enrollmentMiddleware.create(enrollmentData);
+        if (enrollmentResult) {
+          const grievanceData = {
+            enrollmentId: enrollmentResult.originalId,
+            placeOfIncident,
+            dateTimeIncident,
+            summary,
+            attachment,
+          }
+
+          const result = await grievanceMiddleware.create(grievanceData);
+          res.status(201).send(successHandler('Successfully Registered Grievance', 201, result));
+        }
+      }
     } catch ({ error, message, status }) {
       next({
         error,
