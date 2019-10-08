@@ -8,10 +8,11 @@ class Database {
         { useNewUrlParser: true }
       )
         .then(() => {
-          console.log('Successfully Connected to MongoDB');
+          console.log('Successfully Connected to MongoDB', mongoURI);
           return resolve('Successfully Connected to MongoDB');
         })
         .catch((err: Error) => {
+          console.log("MONGO_URI =====", mongoURI);
           console.log('Error:', err.message);
         });
     });
