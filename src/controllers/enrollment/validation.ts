@@ -33,7 +33,7 @@ export default {
   read: {
     id: {
       in: ['params'],
-      regex: MONGO_REGEX,
+      // regex: MONGO_REGEX,
     },
 
     name: {
