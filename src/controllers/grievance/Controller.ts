@@ -14,9 +14,13 @@ class GrievanceController {
         summary,
       } = req.body;
 
-      const attachment = {
-        data: req.file.buffer,
-        contentType: req.file.mimetype,
+      let attachment: any;
+
+      if (req.file) {
+        attachment = {
+          data: req.file.buffer,
+          contentType: req.file.mimetype,
+        }
       }
 
       if (enrollmentId) {

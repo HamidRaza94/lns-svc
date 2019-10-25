@@ -30,11 +30,6 @@ class EnrollmentController {
         paymentId,
       } = req.body;
 
-      console.log('req is ', req);
-
-      console.log('photo is ', photo);
-      console.log('sign is ', sign);
-
       const data = {
         name,
         fatherName,
@@ -104,9 +99,6 @@ class EnrollmentController {
       const result = await enrollmentMiddleware.read(newConditions, projection, options);
       res.status(200).send(successHandler('Successfully Read', 200, result));
     } catch ({ error, message, status }) {
-      console.log('error is ', error)
-      console.log('message is ', message)
-      console.log('status is ', status);
       next({ error, message, status });
     }
   }
