@@ -8,19 +8,8 @@ import grievanceController from './Controller';
 const contactRouter = Router();
 
 contactRouter
-  .post(
-    '/:enrollmentId',
-    config.MULTER.single('attachment'),
-    grievanceController.create,
-  )
-  .post(
-    '/',
-    config.MULTER.single('attachment'),
-    grievanceController.create,
-  )
-  .get(
-    '/:id',
-    grievanceController.read,
-  );
+  .post('/:enrollmentId', config.MULTER.single('attachment'), grievanceController.create)
+  .post('/', config.MULTER.single('attachment'), grievanceController.create)
+  .get('/:id', grievanceController.read);
 
 export default contactRouter;

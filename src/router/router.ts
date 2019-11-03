@@ -1,24 +1,26 @@
 import { Router } from 'express';
 
 import {
+  centerRouter,
+  contactRouter,
+  courseRouter,
   teamRouter,
   memberRouter,
-  contactRouter,
   updateRouter,
   grievanceRouter,
   enrollmentRouter,
-  testRouter,
 } from '../controllers';
 
 const router = Router();
 
 router
+  .use('/center', centerRouter)
+  .use('/contact', contactRouter)
+  .use('/course', courseRouter)
   .use('/team', teamRouter)
   .use('/member', memberRouter)
-  .use('/contact', contactRouter)
   .use('/update', updateRouter)
   .use('/grievance', grievanceRouter)
-  .use('/enrollment', enrollmentRouter)
-  .use('/test', testRouter);
+  .use('/enrollment', enrollmentRouter);
 
 export default router;

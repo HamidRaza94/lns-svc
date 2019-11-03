@@ -12,7 +12,7 @@ import {
   CATEGORY
 } from '../../libs';
 
-const teamValidation = {
+export default {
   create: {
     name: {
       in: ['body'],
@@ -241,7 +241,7 @@ const teamValidation = {
 
   update: {
     id: {
-      in: ['body'],
+      in: ['params'],
       regex: MONGO_REGEX,
       isRequired: true
     },
@@ -261,5 +261,3 @@ const teamValidation = {
     }
   }
 };
-
-export default teamValidation;

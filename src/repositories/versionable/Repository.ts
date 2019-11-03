@@ -1,13 +1,12 @@
 import { Document, DocumentQuery, Model, Types } from 'mongoose';
 
-import { IVersionableQuery, IVersionableProjection } from './IQuery';
+import { IVersionableQuery } from './IQuery';
 
 class VersionableRepository<
   D extends Document,
   M extends Model<D[], D>,
   IData extends IVersionableQuery,
   IConditions extends IVersionableQuery,
-  IProjection extends IVersionableProjection,
   IOptions
 > {
   constructor(private model: M) {}
@@ -77,13 +76,13 @@ class VersionableRepository<
     return doc;
   }
 
-  public async find(conditions?: IConditions, projection?: any, options?: IOptions): DocumentQuery<D[], D> {
+  public async find(conditions?: IConditions, projection: any = '*', options?: IOptions): DocumentQuery<D[], D> {
     if (conditions && conditions.originalId) {
-      return this.findOne(conditions, projection, options);
+      return this.findOne(conditions, projection.split(','), options);
     }
 
     const finalConditions = this.getFinalConditions(conditions);
-    const finalProjection = this.getFinalProjection(projection);
+    const finalProjection = this.getFinalProjection(projection.split(','));
     const finalOptions = this.getFinalOptions(options);
     const doc = await this.model.find(finalConditions, finalProjection, finalOptions);
 

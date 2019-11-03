@@ -7,11 +7,7 @@ import volunteerController from './Controller';
 const volunteerRouter = Router();
 
 volunteerRouter
-  .post(
-    '/',
-    validationHandler(volunteerValidation.create),
-    volunteerController.create
-  )
+  .post('/', validationHandler(volunteerValidation.create), volunteerController.create)
   .get('/', validationHandler(volunteerValidation.read), volunteerController.read);
 
 export default volunteerRouter;

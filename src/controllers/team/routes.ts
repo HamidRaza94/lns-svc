@@ -11,10 +11,6 @@ teamRouter
   .get('/', validationHandler(teamValidation.read), teamController.read)
   .get('/:id', validationHandler(teamValidation.read), teamController.read)
   .put('/', validationHandler(teamValidation.update), teamController.update)
-  .delete(
-    '/:id',
-    validationHandler(teamValidation.delete),
-    teamController.delete
-  );
+  .delete('/:id', validationHandler(teamValidation.delete), teamController.delete);
 
 export default teamRouter;

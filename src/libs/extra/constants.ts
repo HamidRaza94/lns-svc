@@ -31,6 +31,13 @@ const RELIGION: string[] = [
   'other'
 ];
 
+const SUCCESS_RESPONSE = {
+  create: 'Successfully Created',
+  fetch: 'Successfully Fetched',
+  update: 'Successfully Updated',
+  delete: 'Successfully Deleted',
+}
+
 export {
   UPDATE_TYPE,
   NAME_REGEX,
@@ -43,5 +50,6 @@ export {
   SEX,
   MARITAL_STATUS,
   RELIGION,
-  CATEGORY
+  CATEGORY,
+  SUCCESS_RESPONSE,
 };

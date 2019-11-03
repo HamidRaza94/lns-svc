@@ -1,12 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { contactMiddleware } from '../../middlewares';
 import { successHandler } from '../../libs';
 
-class ContactController {
+class VolunteerController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await contactMiddleware.create(req.body);
+      const result = 'result';
       res.status(201).send(successHandler('Successfully Created', 201, result));
     } catch ({ error, message, status }) {
       next({
@@ -19,7 +18,7 @@ class ContactController {
 
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await contactMiddleware.read(req.query);
+      const result = 'result';
       res.status(200).send(successHandler('Successfully Fetched', 200, result));
     } catch ({ error, message, status }) {
       next({
@@ -31,4 +30,4 @@ class ContactController {
   }
 }
 
-export default new ContactController();
+export default new VolunteerController();

@@ -1,6 +1,6 @@
 import { NAME_REGEX, EMAIL_REGEX, PHONE_REGEX } from '../../libs';
 
-const contactValidation = {
+export default {
   create: {
     name: {
       in: ['body'],
@@ -62,5 +62,3 @@ const contactValidation = {
     }
   }
 };
-
-export default contactValidation;

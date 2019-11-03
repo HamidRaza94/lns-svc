@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { enrollmentMiddleware } from '../../middlewares';
-import { successHandler } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { enrollmentRepository, IEnrollmentData, IEnrollmentConditions, IOptions } from '../../repositories';
 
 class EnrollmentController {
   public async create(req: Request, res: Response, next: NextFunction) {
@@ -30,7 +30,7 @@ class EnrollmentController {
         paymentId,
       } = req.body;
 
-      const data = {
+      const data: IEnrollmentData = {
         name,
         fatherName,
         sex,
@@ -54,8 +54,8 @@ class EnrollmentController {
         paymentId,
       }
 
-      const result = await enrollmentMiddleware.create(data);
-      res.status(201).send(successHandler('Successfully Enrolled', 201, result));
+      const result = await enrollmentRepository.create(data);
+      res.status(201).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -70,8 +70,8 @@ class EnrollmentController {
         phone,
       }));
 
-      const result = await enrollmentMiddleware.bulkCreate(data);
-      res.status(201).send(successHandler('Successfully Enrolled', 201, result));
+      const result = await enrollmentRepository.bulkCreate(data);
+      res.status(201).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -81,23 +81,15 @@ class EnrollmentController {
     try {
       const {
         params: { id },
-        body: { conditions, projection },
-        query: { limit, skip },
+        query: { name, fatherHusbandName, phone, projection, limit, skip },
       } = req;
 
-      const options = {
-        limit: parseInt(limit),
-        skip: parseInt(skip),
-      }
+      const conditions: IEnrollmentConditions = filterDefinedObject({ name, fatherHusbandName, phone });
+      conditions.originalId = id;
+      const options: IOptions = toInt({ limit, skip });
 
-      const newConditions = { ...conditions };
-
-      if (id) {
-        newConditions.originalId = id;
-      }
-
-      const result = await enrollmentMiddleware.read(newConditions, projection, options);
-      res.status(200).send(successHandler('Successfully Read', 200, result));
+      const result = await enrollmentRepository.read(conditions, projection, options);
+      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -110,8 +102,10 @@ class EnrollmentController {
         body: { dataToUpdate },
       } = req;
 
-      const result = await enrollmentMiddleware.update({ originalId: id }, dataToUpdate);
-      res.status(200).send(successHandler('Successfully Updated', 200, result));
+      const conditions: IEnrollmentConditions = { originalId: id };
+
+      const result = await enrollmentRepository.update(conditions, dataToUpdate);
+      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.update}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -120,9 +114,10 @@ class EnrollmentController {
   public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { params: { id } } = req;
+      const conditions: IEnrollmentConditions = { originalId: id };
 
-      const result = await enrollmentMiddleware.delete({ originalId: id });
-      res.status(200).send(successHandler('Successfully Deleted', 200, result));
+      const result = await enrollmentRepository.delete(conditions);
+      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.delete}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }

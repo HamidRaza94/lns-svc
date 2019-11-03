@@ -1,7 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { enrollmentMiddleware, grievanceMiddleware } from '../../middlewares';
-import { successHandler } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import {
+  enrollmentRepository,
+  grievanceRepository,
+  IEnrollmentData,
+  IGrievanceData,
+  IGrievanceConditions,
+  IOptions,
+} from '../../repositories';
 
 class GrievanceController {
   public async create(req: Request, res: Response, next: NextFunction) {
@@ -24,7 +31,7 @@ class GrievanceController {
       }
 
       if (enrollmentId) {
-        const grievanceData = {
+        const grievanceData: IGrievanceData = {
           enrollmentId,
           placeOfIncident,
           dateTimeIncident,
@@ -32,7 +39,7 @@ class GrievanceController {
           attachment,
         }
 
-        const result = await grievanceMiddleware.create(grievanceData);
+        const result = await grievanceRepository.create(grievanceData);
         res.status(201).send(successHandler('Successfully Registered Grievance', 201, result));
       } else {
         const {
@@ -52,7 +59,7 @@ class GrievanceController {
           pincode,
         } = req.body;
 
-        const enrollmentData = {
+        const enrollmentData: IEnrollmentData = {
           name,
           fatherName,
           sex,
@@ -76,9 +83,9 @@ class GrievanceController {
           paymentId: '',
         }
 
-        const enrollmentResult = await enrollmentMiddleware.create(enrollmentData);
+        const enrollmentResult = await enrollmentRepository.create(enrollmentData);
         if (enrollmentResult) {
-          const grievanceData = {
+          const grievanceData: IGrievanceData = {
             enrollmentId: enrollmentResult.originalId,
             placeOfIncident,
             dateTimeIncident,
@@ -86,16 +93,12 @@ class GrievanceController {
             attachment,
           }
 
-          const result = await grievanceMiddleware.create(grievanceData);
-          res.status(201).send(successHandler('Successfully Registered Grievance', 201, result));
+          const result = await grievanceRepository.create(grievanceData);
+          res.status(201).send(successHandler(`Grievance ${SUCCESS_RESPONSE.create}`, 201, result));
         }
       }
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status
-      });
+      next({ error, message, status });
     }
   }
 
@@ -103,29 +106,17 @@ class GrievanceController {
     try {
       const {
         params: { id },
-        body: { conditions, projection },
-        query: { limit, skip },
+        query: { placeOfIncident, dateTimeIncident, projection, limit, skip },
       } = req;
 
-      const options = {
-        limit: parseInt(limit),
-        skip: parseInt(skip),
-      }
+      const conditions: IGrievanceConditions = filterDefinedObject({ placeOfIncident, dateTimeIncident });
+      conditions.originalId = id;
+      const options: IOptions = toInt({ limit, skip });
 
-      const newConditions = { ...conditions };
-
-      if (id) {
-        newConditions.originalId = id;
-      }
-
-      const result = await grievanceMiddleware.read(newConditions, projection, options);
-      res.status(200).send(successHandler('Successfully Read', 200, result));
+      const result = await grievanceRepository.read(conditions, projection, options);
+      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 
@@ -136,14 +127,10 @@ class GrievanceController {
         body: { dataToUpdate },
       } = req;
 
-      const result = await grievanceMiddleware.update({ originalId: id }, dataToUpdate);
-      res.status(200).send(successHandler('Successfully Updated', 200, result));
+      const result = await grievanceRepository.update({ originalId: id }, dataToUpdate);
+      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.update}`, 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 
@@ -151,14 +138,10 @@ class GrievanceController {
     try {
       const { params: { id } } = req;
 
-      const result = await grievanceMiddleware.delete({ originalId: id });
-      res.status(200).send(successHandler('Successfully Deleted', 200, result));
+      const result = await grievanceRepository.delete({ originalId: id });
+      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.delete}`, 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status,
-      })
+      next({ error, message, status });
     }
   }
 }

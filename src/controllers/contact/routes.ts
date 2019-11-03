@@ -7,11 +7,7 @@ import contactController from './Controller';
 const contactRouter = Router();
 
 contactRouter
-  .post(
-    '/',
-    validationHandler(contactValidation.create),
-    contactController.create
-  )
+  .post('/', validationHandler(contactValidation.create), contactController.create)
   .get('/', validationHandler(contactValidation.read), contactController.read);
 
 export default contactRouter;

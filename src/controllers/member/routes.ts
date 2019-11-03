@@ -11,10 +11,6 @@ memberRouter
   .get('/', validationHandler(memberValidation.read), memberController.read)
   .get('/:id', validationHandler(memberValidation.read), memberController.read)
   .put('/', validationHandler(memberValidation.update), memberController.update)
-  .delete(
-    '/:id',
-    validationHandler(memberValidation.delete),
-    memberController.delete
-  );
+  .delete('/:id', validationHandler(memberValidation.delete), memberController.delete);
 
 export default memberRouter;

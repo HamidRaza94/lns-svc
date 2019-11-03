@@ -1,32 +1,32 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { contactMiddleware } from '../../middlewares';
-import { successHandler } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { contactRepository, IContactData, IContactConditions, IOptions } from '../../repositories';
 
 class ContactController {
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await contactMiddleware.create(req.body);
-      res.status(201).send(successHandler('Successfully Created', 201, result));
+      const { name, email, phone, comment } = req.body;
+      const contactData: IContactData = { name, email, phone, comment }
+      console.log('phone number is ', phone);
+
+      const result = await contactRepository.create(contactData);
+      res.status(201).send(successHandler(`Contact ${SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status
-      });
+      next({ error, message, status });
     }
   }
 
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await contactMiddleware.read(req.query);
-      res.status(200).send(successHandler('Successfully Fetched', 200, result));
+      const { name, email, phone, limit, skip, projection } = req.query;
+      const conditions: IContactConditions = filterDefinedObject({ name, email, phone });
+      const options: IOptions = toInt({ limit, skip });
+
+      const result = await contactRepository.find(conditions, projection, options);
+      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
-      next({
-        error,
-        message,
-        status
-      });
+      next({ error, message, status });
     }
   }
 }

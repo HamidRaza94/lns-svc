@@ -18,4 +18,25 @@ const filterDefinedObject = (obj: any) => {
   return filteredObj;
 }
 
-export { arrayMerger, filterDefinedObject };
+const toInt = (data: any) => {
+  if (data && typeof data === 'number') {
+    return data;
+  } else {
+    let convertedData = {};
+    if (data && typeof data === 'string') {
+      convertedData = parseInt(data);
+    } else if (data && typeof data === 'object') {
+      for (const key in data) {
+        if (data[key] && typeof data[key] === 'number') {
+          convertedData[key] = data[key];
+        } else if (data[key] && typeof data[key] === 'string') {
+          convertedData[key] = parseInt(data[key]);
+        }
+      }
+    }
+    
+    return convertedData;
+  }
+}
+
+export { arrayMerger, filterDefinedObject, toInt };

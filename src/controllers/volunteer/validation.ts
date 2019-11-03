@@ -12,7 +12,7 @@ import {
   MONGO_REGEX,
 } from '../../libs';
 
-const contactValidation = {
+export default {
   create: {
     name: {
       in: ['body'],
@@ -233,5 +233,3 @@ const contactValidation = {
     }
   }
 };
-
-export default contactValidation;

@@ -1,6 +1,6 @@
 import { UPDATE_TYPE, MONGO_REGEX } from '../../libs';
 
-const updateValidation = {
+export default {
   create: {
     type: {
       in: ['body'],
@@ -46,7 +46,7 @@ const updateValidation = {
 
   update: {
     id: {
-      in: ['body'],
+      in: ['params'],
       regex: MONGO_REGEX,
       isRequired: true
     },
@@ -66,5 +66,3 @@ const updateValidation = {
     }
   }
 };
-
-export default updateValidation;
