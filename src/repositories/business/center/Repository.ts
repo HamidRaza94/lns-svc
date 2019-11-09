@@ -25,8 +25,12 @@ class CenterRepository extends VersionableRepository<
     return super.create(data);
   }
 
-  public read(conditions?: ICenterConditions, projection?: string, options?: IOptions) {
+  public find(conditions?: ICenterConditions, projection?: string, options?: IOptions) {
     return super.find(conditions, projection, options);
+  }
+
+  public findOne(conditions?: ICenterConditions, projection?: string, options?: IOptions) {
+    return super.findOne(conditions, projection, options);
   }
 
   public update(conditions: ICenterConditions, dataToUpdate: ICenterData, options?: IOptions) {

@@ -1,103 +1,38 @@
-import { MONGO_REGEX } from '../../libs';
+import { validationRule } from '../../libs';
+import { REGEX } from '../../libs/constants';
 
 export default {
   create: {
-    code: {
-      in: ['body'],
-      isRequired: true,
-      isString: true,
-    },
-
-    name: {
-      in: ['body'],
-      isRequired: true,
-      isString: true,
-    },
+    code: validationRule.string.inBody(),
+    name: validationRule.string.inBody(),
   },
 
   read: {
-    code: {
-      in: ['query'],
-      isString: true,
-    },
-
-    name: {
-      in: ['query'],
-      isString: true,
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      default: 10,
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-    },
+    code: validationRule.string.inQuery(),
+    name: validationRule.string.inQuery(),
+    ...validationRule.limitSkip,
   },
 
   readByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-      isString: true,
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      default: 10,
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-    },
+    code: validationRule.string.inParams(),
+    ...validationRule.limitSkip,
   },
 
   update: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true,
-    },
+    id: validationRule.byRegex.inParams(REGEX.mongo),
+    dataToUpdate: validationRule.object.inBody(),
   },
 
   updateByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true,
-    },
+    code: validationRule.string.inParams(),
+    dataToUpdate: validationRule.object.inBody(),
   },
 
   delete: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
+    id: validationRule.byRegex.inParams(REGEX.mongo),
   },
 
   deleteByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-    },
+    code: validationRule.string.inParams(),
   },
 };

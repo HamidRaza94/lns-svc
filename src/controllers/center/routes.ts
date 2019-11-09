@@ -7,13 +7,11 @@ import centerController from './Controller';
 const centerRouter = Router();
 
 centerRouter
-  .post('/bulk', centerController.bulkCreate)
+  .post('/bulk', centerController.bulkCreate) // wrong (duplicate record can't be stored)
   .post('/', validationHandler(centerValidation.create), centerController.create)
-  .get('/', validationHandler(centerValidation.read), centerController.read)
-  .get('/code/:code', validationHandler(centerValidation.readByCode), centerController.readByCode)
-  .put('/:id', validationHandler(centerValidation.update), centerController.update)
-  .put('/code/:code', validationHandler(centerValidation.updateByCode), centerController.updateByCode)
-  .delete('/:id', validationHandler(centerValidation.delete), centerController.delete)
-  .delete('/code/:code', validationHandler(centerValidation.deleteByCode), centerController.deleteByCode);
+  .get('/', validationHandler(centerValidation.list), centerController.list)
+  .get('/:code', validationHandler(centerValidation.read), centerController.read)
+  .put('/:code', validationHandler(centerValidation.update), centerController.update)
+  .delete('/:code', validationHandler(centerValidation.delete), centerController.delete);
 
 export default centerRouter;

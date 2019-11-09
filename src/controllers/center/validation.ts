@@ -1,114 +1,30 @@
-import { MONGO_REGEX } from '../../libs';
+import { validationRule } from '../../libs'
 
 export default {
   create: {
-    code: {
-      in: ['body'],
-      isRequired: true,
-      isString: true,
-    },
+    code: validationRule.string.inBody(),
+    name: validationRule.string.inBody(),
+    address: validationRule.object.inBody(),
+  },
 
-    name: {
-      in: ['body'],
-      isRequired: true,
-      isString: true,
-    },
-
-    address: {
-      in: ['body'],
-      isRequired: true,
-      isObject: true,
-    },
+  list: {
+    code: validationRule.string.inQuery(),
+    name: validationRule.string.inQuery(),
+    address: validationRule.object.inQuery(),
+    ...validationRule.limitSkip,
   },
 
   read: {
-    code: {
-      in: ['query'],
-      isString: true,
-    },
-
-    name: {
-      in: ['query'],
-      isString: true,
-    },
-
-    address: {
-      in: ['query'],
-      isObject: true,
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      default: 10,
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-    },
-  },
-
-  readByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-      isString: true,
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      default: 10,
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-    },
+    code: validationRule.string.inParams(),
+    ...validationRule.limitSkip,
   },
 
   update: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true,
-    },
-  },
-
-  updateByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true,
-    },
+    code: validationRule.string.inParams(),
+    dataToUpdate: validationRule.object.inBody(),
   },
 
   delete: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
-  },
-
-  deleteByCode: {
-    code: {
-      in: ['params'],
-      isRequired: true,
-    },
+    code: validationRule.string.inParams(),
   },
 };

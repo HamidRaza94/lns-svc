@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, MESSAGE } from '../../libs';
 import { updateRepository, IUpdateData, IUpdateConditions, IOptions } from '../../repositories';
 
 class UpdateController {
@@ -10,7 +10,7 @@ class UpdateController {
       const updateData: IUpdateData = { type, headline, description }
 
       const result = await updateRepository.create(updateData);
-      res.status(201).send(successHandler(`Update ${SUCCESS_RESPONSE.create}`, 201, result));
+      res.status(201).send(successHandler(`Update ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -27,7 +27,7 @@ class UpdateController {
       const options: IOptions = toInt({ limit, skip });
 
       const result = await updateRepository.find(conditions, projection, options);
-      res.status(200).send(successHandler(`Update ${SUCCESS_RESPONSE.fetch}`, 200, result));
+      res.status(200).send(successHandler(`Update ${MESSAGE.SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -43,7 +43,7 @@ class UpdateController {
       const conditions: IUpdateConditions = { originalId: id };
 
       const result = await updateRepository.update(conditions, dataToUpdate);
-      res.status(200).send(successHandler(`Update ${SUCCESS_RESPONSE.update}`, 200, result));
+      res.status(200).send(successHandler(`Update ${MESSAGE.SUCCESS_RESPONSE.update}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -54,7 +54,7 @@ class UpdateController {
       const conditions: IUpdateConditions = { originalId: req.params.id };
 
       const result = await updateRepository.delete(conditions);
-      res.status(200).send(successHandler(`Update ${SUCCESS_RESPONSE.delete}`, 200, result));
+      res.status(200).send(successHandler(`Update ${MESSAGE.SUCCESS_RESPONSE.delete}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }

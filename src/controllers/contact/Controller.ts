@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, MESSAGE } from '../../libs';
 import { contactRepository, IContactData, IContactConditions, IOptions } from '../../repositories';
 
 class ContactController {
@@ -11,7 +11,7 @@ class ContactController {
       console.log('phone number is ', phone);
 
       const result = await contactRepository.create(contactData);
-      res.status(201).send(successHandler(`Contact ${SUCCESS_RESPONSE.create}`, 201, result));
+      res.status(201).send(successHandler(`Contact ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -24,7 +24,7 @@ class ContactController {
       const options: IOptions = toInt({ limit, skip });
 
       const result = await contactRepository.find(conditions, projection, options);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.fetch}`, 200, result));
+      res.status(200).send(successHandler(`Center ${MESSAGE.SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }

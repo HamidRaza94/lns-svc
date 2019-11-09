@@ -1,68 +1,24 @@
-import { UPDATE_TYPE, MONGO_REGEX } from '../../libs';
+import { validationRule } from '../../libs';
+import { REGEX, UPDATE_TYPE } from '../../libs/constants';
 
 export default {
   create: {
-    type: {
-      in: ['body'],
-      isIn: UPDATE_TYPE,
-      isRequired: true,
-      isString: true
-    },
-
-    headline: {
-      in: ['body'],
-      isRequired: true,
-      isString: true
-    },
-
-    description: {
-      in: ['body'],
-      isRequired: true,
-      isString: true
-    }
+    type: validationRule.isIn.inBody(UPDATE_TYPE),
+    headline: validationRule.string.inBody(),
+    description: validationRule.string.inBody(),
   },
 
   read: {
-    type: {
-      in: ['params'],
-      isIn: UPDATE_TYPE,
-      isRequired: false,
-      isString: true
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      isRequired: false
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-      isRequired: false
-    }
+    type: validationRule.isIn.inParams(UPDATE_TYPE),
+    ...validationRule.limitSkip,
   },
 
   update: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true
-    }
+    id: validationRule.byRegex.inParams(REGEX.mongo),
+    dataToUpdate: validationRule.object.inBody(),
   },
 
   delete: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true
-    }
-  }
+    id: validationRule.byRegex.inParams(REGEX.mongo),
+  },
 };

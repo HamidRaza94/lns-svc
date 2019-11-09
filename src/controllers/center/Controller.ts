@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { SystemResponse, filterDefinedObject, toInt, MESSAGE } from '../../libs';
 import { centerRepository, ICenterData, ICenterConditions, IOptions } from '../../repositories';
 
 class CenterController {
   public async bulkCreate(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await centerRepository.createAll(req.body);
-      res.status(201).send(successHandler(`Center ${SUCCESS_RESPONSE.create}`, 201, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status });
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.create}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 
@@ -17,29 +17,41 @@ class CenterController {
     try {
       const { code, name, address } = req.body;
       const data: ICenterData = { code, name, address };
+      const conditions: ICenterConditions = { code };
+
+      const isCenterExist = await centerRepository.findOne(conditions);
+
+      if (isCenterExist) {
+        throw SystemResponse.badRequestError(`Center ${MESSAGE.FAILURE_RESPONSE.alreadyExistCode}`);
+      }
 
       const result = await centerRepository.create(data);
-      res.status(201).send(successHandler(`Center ${SUCCESS_RESPONSE.create}`, 201, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status });
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.create}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 
-  public async read(req: Request, res: Response, next: NextFunction) {
+  public async list(req: Request, res: Response, next: NextFunction) {
     try {
       const { code, name, address, projection, limit, skip } = req.query;
 
       const conditions: ICenterConditions = filterDefinedObject({ code, name, address });
       const options: IOptions = toInt({ limit, skip });
 
-      const result = await centerRepository.read(conditions, projection, options);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.fetch}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status });
+      const result = await centerRepository.find(conditions, projection, options);
+
+      if (!result.length) {
+        throw SystemResponse.badRequestError(MESSAGE.FAILURE_RESPONSE.notFound);
+      }
+
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.fetch}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 
-  public async readByCode(req: Request, res: Response, next: NextFunction) {
+  public async read(req: Request, res: Response, next: NextFunction) {
     try {
       const {
         params: { code },
@@ -49,30 +61,19 @@ class CenterController {
       const conditions: ICenterConditions = { code };
       const options: IOptions = toInt({ limit, skip });
 
-      const result = await centerRepository.read(conditions, projection, options);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.fetch}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status });
+      const result = await centerRepository.findOne(conditions, projection, options);
+
+      if (!result) {
+        throw SystemResponse.badRequestError(MESSAGE.FAILURE_RESPONSE.notFound);
+      }
+
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.fetch}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 
   public async update(req: Request, res: Response, next: NextFunction) {
-    try {
-      const {
-        params: { id },
-        body: { dataToUpdate },
-      } = req;
-
-      const conditions: ICenterConditions = { originalId: id };
-
-      const result = await centerRepository.update(conditions, dataToUpdate);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.update}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status })
-    }
-  }
-
-  public async updateByCode(req: Request, res: Response, next: NextFunction) {
     try {
       const {
         params: { code },
@@ -80,34 +81,34 @@ class CenterController {
       } = req;
 
       const conditions: ICenterConditions = { code };
+      const isCenterExist = await centerRepository.findOne(conditions);
+
+      if (!isCenterExist) {
+        throw SystemResponse.badRequestError(`Center ${MESSAGE.FAILURE_RESPONSE.doesNotExistCode}`);
+      }
 
       const result = await centerRepository.update(conditions, dataToUpdate);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.update}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status })
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.update}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 
   public async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const conditions: ICenterConditions = { originalId: req.params.id };
-
-      const result = await centerRepository.delete(conditions);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.delete}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status })
-    }
-  }
-
-  public async deleteByCode(req: Request, res: Response, next: NextFunction) {
-    try {
       const { code } = req.params;
       const conditions: ICenterConditions = { code };
 
+      const isCenterExist = await centerRepository.findOne(conditions);
+
+      if (!isCenterExist) {
+        throw SystemResponse.badRequestError(`Center ${MESSAGE.FAILURE_RESPONSE.doesNotExistCode}`);
+      }
+
       const result = await centerRepository.delete(conditions);
-      res.status(200).send(successHandler(`Center ${SUCCESS_RESPONSE.delete}`, 200, result));
-    } catch ({ error, message, status }) {
-      next({ error, message, status })
+      res.send(SystemResponse.success(`Center ${MESSAGE.SUCCESS_RESPONSE.delete}`, result));
+    } catch (err) {
+      next(err);
     }
   }
 }

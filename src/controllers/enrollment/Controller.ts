@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, MESSAGE } from '../../libs';
 import { enrollmentRepository, IEnrollmentData, IEnrollmentConditions, IOptions } from '../../repositories';
 
 class EnrollmentController {
@@ -55,7 +55,7 @@ class EnrollmentController {
       }
 
       const result = await enrollmentRepository.create(data);
-      res.status(201).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.create}`, 201, result));
+      res.status(201).send(successHandler(`Enrollment ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -71,7 +71,7 @@ class EnrollmentController {
       }));
 
       const result = await enrollmentRepository.bulkCreate(data);
-      res.status(201).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.create}`, 201, result));
+      res.status(201).send(successHandler(`Enrollment ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -89,7 +89,7 @@ class EnrollmentController {
       const options: IOptions = toInt({ limit, skip });
 
       const result = await enrollmentRepository.read(conditions, projection, options);
-      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.fetch}`, 200, result));
+      res.status(200).send(successHandler(`Enrollment ${MESSAGE.SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -105,7 +105,7 @@ class EnrollmentController {
       const conditions: IEnrollmentConditions = { originalId: id };
 
       const result = await enrollmentRepository.update(conditions, dataToUpdate);
-      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.update}`, 200, result));
+      res.status(200).send(successHandler(`Enrollment ${MESSAGE.SUCCESS_RESPONSE.update}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -117,7 +117,7 @@ class EnrollmentController {
       const conditions: IEnrollmentConditions = { originalId: id };
 
       const result = await enrollmentRepository.delete(conditions);
-      res.status(200).send(successHandler(`Enrollment ${SUCCESS_RESPONSE.delete}`, 200, result));
+      res.status(200).send(successHandler(`Enrollment ${MESSAGE.SUCCESS_RESPONSE.delete}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }

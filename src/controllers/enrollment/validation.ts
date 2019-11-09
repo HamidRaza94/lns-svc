@@ -1,84 +1,27 @@
-import { MONGO_REGEX, NAME_REGEX, PHONE_REGEX } from '../../libs';
+import { validationRule } from '../../libs';
+import { REGEX } from '../../libs/constants';
 
 export default {
   create: {
-    name: {
-      in: ['body'],
-      isRequired: true,
-      regex: NAME_REGEX,
-      isString: true,
-    },
-
-    fatherHusbandName: {
-      in: ['body'],
-      isRequired: true,
-      regex: NAME_REGEX,
-      isString: true,
-    },
-
-    address: {
-      in: ['body'],
-      isRequired: true,
-      isString: true,
-    },
-
-    phone: {
-      in: ['body'],
-      regex: PHONE_REGEX,
-      isRequired: true,
-      isNumber: true,
-    },
+    name: validationRule.byRegex.inBody(REGEX.alpha),
+    fatherHusbandName: validationRule.byRegex.inBody(REGEX.alpha),
+    address: validationRule.string.inBody(),
+    phone: validationRule.byRegex.inBody(REGEX.phone),
   },
 
   read: {
-    id: {
-      in: ['params'],
-      // regex: MONGO_REGEX,
-    },
-
-    name: {
-      in: ['query'],
-      regex: NAME_REGEX,
-      isString: true,
-    },
-
-    fatherHusbandName: {
-      in: ['query'],
-      regex: NAME_REGEX,
-      isString: true,
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0,
-    },
+    id: validationRule.byRegex.inParams(REGEX.mongo),
+    name: validationRule.byRegex.inQuery(REGEX.alpha),
+    fatherHusbandName: validationRule.byRegex.inQuery(REGEX.alpha),
+    ...validationRule.limitSkip,
   },
 
   update: {
-    id: {
-      in: ['body'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
-
-    dataToUpdate: {
-      in: ['body'],
-      isObject: true,
-      isRequired: true,
-    },
+    id: validationRule.byRegex.inParams(REGEX.mongo),
+    dataToUpdate: validationRule.object.inBody(),
   },
 
   delete: {
-    id: {
-      in: ['params'],
-      regex: MONGO_REGEX,
-      isRequired: true,
-    },
+    id: validationRule.byRegex.inParams(REGEX.mongo),
   },
 };

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { successHandler, filterDefinedObject, toInt, SUCCESS_RESPONSE } from '../../libs';
+import { successHandler, filterDefinedObject, toInt, MESSAGE } from '../../libs';
 import {
   enrollmentRepository,
   grievanceRepository,
@@ -94,7 +94,7 @@ class GrievanceController {
           }
 
           const result = await grievanceRepository.create(grievanceData);
-          res.status(201).send(successHandler(`Grievance ${SUCCESS_RESPONSE.create}`, 201, result));
+          res.status(201).send(successHandler(`Grievance ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, result));
         }
       }
     } catch ({ error, message, status }) {
@@ -114,7 +114,7 @@ class GrievanceController {
       const options: IOptions = toInt({ limit, skip });
 
       const result = await grievanceRepository.read(conditions, projection, options);
-      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.fetch}`, 200, result));
+      res.status(200).send(successHandler(`Grievance ${MESSAGE.SUCCESS_RESPONSE.fetch}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -128,7 +128,7 @@ class GrievanceController {
       } = req;
 
       const result = await grievanceRepository.update({ originalId: id }, dataToUpdate);
-      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.update}`, 200, result));
+      res.status(200).send(successHandler(`Grievance ${MESSAGE.SUCCESS_RESPONSE.update}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }
@@ -139,7 +139,7 @@ class GrievanceController {
       const { params: { id } } = req;
 
       const result = await grievanceRepository.delete({ originalId: id });
-      res.status(200).send(successHandler(`Grievance ${SUCCESS_RESPONSE.delete}`, 200, result));
+      res.status(200).send(successHandler(`Grievance ${MESSAGE.SUCCESS_RESPONSE.delete}`, 200, result));
     } catch ({ error, message, status }) {
       next({ error, message, status });
     }

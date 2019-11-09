@@ -84,17 +84,7 @@ class VersionableRepository<
     const finalConditions = this.getFinalConditions(conditions);
     const finalProjection = this.getFinalProjection(projection.split(','));
     const finalOptions = this.getFinalOptions(options);
-    const doc = await this.model.find(finalConditions, finalProjection, finalOptions);
-
-    if (!doc || !doc.length) {
-      throw {
-        error: 'Not Found',
-        message: 'Data Not Found',
-        status: 404,
-      };
-    }
-
-    return doc;
+    return await this.model.find(finalConditions, finalProjection, finalOptions);
   }
 
   public async update(conditions: IConditions, dataToUpdate: IData, options?: IOptions) {
@@ -129,21 +119,11 @@ class VersionableRepository<
     return await this.updateOne(conditions, dataToUpdate);
   }
 
-  public async findOne(conditions?: IConditions, projection?: [string], options?: IOptions): DocumentQuery<D[], D> {
+  public async findOne(conditions?: IConditions, projection: any = '*', options?: IOptions): DocumentQuery<D[], D> {
     const finalConditions = this.getFinalConditions(conditions);
     const finalProjection = this.getFinalProjection(projection);
     const finalOptions = this.getFinalOptions(options);
-    const doc = await this.model.findOne(finalConditions, finalProjection, finalOptions);
-
-    if (!doc) {
-      throw {
-        error: 'Not Found',
-        message: 'Data Not Found',
-        status: 404,
-      };
-    }
-
-    return doc;
+    return await this.model.findOne(finalConditions, finalProjection, finalOptions);
   }
 
   public async updateOne(conditions: IConditions, dataToUpdate: IData, options?: IOptions) {
@@ -154,7 +134,7 @@ class VersionableRepository<
       throw {
         error: 'Bad Request',
         message: 'Data Not Updated',
-        status: 400
+        status: 400,
       };
     }
 

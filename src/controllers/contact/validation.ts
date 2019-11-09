@@ -1,64 +1,18 @@
-import { NAME_REGEX, EMAIL_REGEX, PHONE_REGEX } from '../../libs';
+import { validationRule } from '../../libs';
+import { REGEX } from '../../libs/constants';
 
 export default {
   create: {
-    name: {
-      in: ['body'],
-      regex: NAME_REGEX,
-      isRequired: true,
-      isString: true
-    },
-
-    email: {
-      in: ['body'],
-      regex: EMAIL_REGEX,
-      isRequired: true,
-      isString: true
-    },
-
-    phone: {
-      in: ['body'],
-      regex: PHONE_REGEX,
-      isRequired: true,
-      isNumber: true
-    },
-
-    comment: {
-      in: ['body'],
-      isRequired: true,
-      isString: true
-    }
+    name: validationRule.string.inBody(),
+    email: validationRule.byRegex.inBody(REGEX.email),
+    phone: validationRule.byRegex.inBody(REGEX.phone),
+    comment: validationRule.string.inBody(),
   },
 
   read: {
-    name: {
-      in: ['query'],
-      regex: NAME_REGEX,
-      isString: true
-    },
-
-    email: {
-      in: ['query'],
-      regex: EMAIL_REGEX,
-      isString: true
-    },
-
-    phone: {
-      in: ['query'],
-      regex: PHONE_REGEX,
-      isNumber: true
-    },
-
-    limit: {
-      in: ['query'],
-      isNumber: true,
-      default: 10
-    },
-
-    skip: {
-      in: ['query'],
-      isNumber: true,
-      default: 0
-    }
+    name: validationRule.byRegex.inQuery(REGEX.alpha),
+    email: validationRule.byRegex.inQuery(REGEX.email),
+    phone: validationRule.byRegex.inQuery(REGEX.phone),
+    ...validationRule.limitSkip,
   }
 };
