@@ -1,7 +1,7 @@
 {
-  "name": "lnspji-server",
+  "name": "lns-svc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Service for Lok Niyay Sansthan",
   "main": "index.js",
   "scripts": {
     "prebuild": "npm run clean:build",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HamidRaza94/lnspji-server.git"
+    "url": "git+https://github.com/HamidRaza94/lns-svc.git"
   },
   "author": "Mohammad Hamid Raza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HamidRaza94/lnspji-server/issues"
+    "url": "https://github.com/HamidRaza94/lns-svc/issues"
   },
-  "homepage": "https://github.com/HamidRaza94/lnspji-server#readme",
+  "homepage": "https://github.com/HamidRaza94/lns-svc#readme",
   "dependencies": {
     "body-parser": "1.20.2",
     "cloudinary": "1.15.0",
