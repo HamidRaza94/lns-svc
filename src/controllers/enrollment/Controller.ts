@@ -82,7 +82,7 @@ class EnrollmentController {
       const {
         params: { id },
         query: { name, fatherHusbandName, phone, projection, limit, skip },
-      } = req;
+      } = req as any;
 
       const conditions: IEnrollmentConditions = filterDefinedObject({ name, fatherHusbandName, phone });
       conditions.originalId = id;

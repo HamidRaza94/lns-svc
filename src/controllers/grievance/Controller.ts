@@ -11,7 +11,7 @@ import {
 } from '../../repositories';
 
 class GrievanceController {
-  public async create(req: Request, res: Response, next: NextFunction) {
+  public async create(req: any, res: Response, next: NextFunction) {
     try {
       const { enrollmentId } = req.params;
 
@@ -83,7 +83,7 @@ class GrievanceController {
           paymentId: '',
         }
 
-        const enrollmentResult = await enrollmentRepository.create(enrollmentData);
+        const enrollmentResult: any = await enrollmentRepository.create(enrollmentData);
         if (enrollmentResult) {
           const grievanceData: IGrievanceData = {
             enrollmentId: enrollmentResult.originalId,
@@ -107,7 +107,7 @@ class GrievanceController {
       const {
         params: { id },
         query: { placeOfIncident, dateTimeIncident, projection, limit, skip },
-      } = req;
+      } = req as any;
 
       const conditions: IGrievanceConditions = filterDefinedObject({ placeOfIncident, dateTimeIncident });
       conditions.originalId = id;

@@ -22,7 +22,6 @@ interface ITeamData extends IVersionableQuery {
 }
 
 interface ITeamConditions extends IVersionableQuery {
-  originalId?: String;
   name?: string,
   fatherHusbandName?: string,
   sex?: string,

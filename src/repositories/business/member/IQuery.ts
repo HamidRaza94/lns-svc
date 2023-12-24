@@ -23,7 +23,6 @@ interface IMemberData extends IVersionableQuery {
 }
 
 interface IMemberConditions extends IVersionableQuery {
-  originalId?: String;
   name?: string,
   fatherHusbandName?: string,
   sex?: string,

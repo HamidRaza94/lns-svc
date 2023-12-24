@@ -21,7 +21,7 @@ class UpdateController {
       const {
         params: { type },
         query: { projection, limit, skip }
-      } = req;
+      } = req as any;
 
       const conditions: IUpdateConditions = filterDefinedObject({ type });
       const options: IOptions = toInt({ limit, skip });

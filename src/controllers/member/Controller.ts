@@ -81,7 +81,7 @@ class MemberController {
           limit,
           skip,
         }
-      } = req;
+      } = req as any;
 
       const conditions: IMemberConditions = filterDefinedObject({
         name,

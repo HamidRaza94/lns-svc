@@ -3,10 +3,7 @@ import { connect, disconnect } from 'mongoose';
 class Database {
   public static async open(mongoURI: string) {
     return new Promise((resolve, reject) => {
-      connect(
-        mongoURI,
-        { useNewUrlParser: true }
-      )
+      connect(mongoURI)
         .then(() => {
           console.log('Successfully Connected to MongoDB');
           return resolve('Successfully Connected to MongoDB');

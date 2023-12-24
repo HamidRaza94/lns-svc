@@ -33,7 +33,7 @@ class VersionableSchema extends Schema {
       versionKey: false,
     }
 
-    const schema: Schema = Object.assign(baseSchema, versionableSchema);
+    const schema: SchemaDefinition = Object.assign(baseSchema, versionableSchema);
     const options: SchemaOptions = Object.assign(baseOptions, versionableOptions);
     super(schema, options);
   }

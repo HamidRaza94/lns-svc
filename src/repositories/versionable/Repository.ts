@@ -1,10 +1,10 @@
-import { Document, DocumentQuery, Model, Types } from 'mongoose';
+import { Document, Model, Types } from 'mongoose';
 
 import { IVersionableQuery } from './IQuery';
 
 class VersionableRepository<
   D extends Document,
-  M extends Model<D[], D>,
+  M extends Model<D>,
   IData extends IVersionableQuery,
   IConditions extends IVersionableQuery,
   IOptions
@@ -30,7 +30,7 @@ class VersionableRepository<
   }
 
   public static generateObjectId(): string {
-    return String(Types.ObjectId());
+    return String(new Types.ObjectId());
   }
 
   public async countDocuments() {
@@ -76,19 +76,19 @@ class VersionableRepository<
     return doc;
   }
 
-  public async find(conditions?: IConditions, projection: any = '*', options?: IOptions): DocumentQuery<D[], D> {
+  public async find(conditions?: IConditions, projection: any = '*', options?: IOptions) {
     if (conditions && conditions.originalId) {
       return this.findOne(conditions, projection.split(','), options);
     }
 
-    const finalConditions = this.getFinalConditions(conditions);
+    const finalConditions: any = this.getFinalConditions(conditions);
     const finalProjection = this.getFinalProjection(projection.split(','));
     const finalOptions = this.getFinalOptions(options);
     return await this.model.find(finalConditions, finalProjection, finalOptions);
   }
 
   public async update(conditions: IConditions, dataToUpdate: IData, options?: IOptions) {
-    const prevDoc = await this.findOne(conditions, ['*']);
+    const prevDoc: any = await this.findOne(conditions, ['*']);
 
     const newDoc = {...prevDoc};
     const curDate = new Date();
@@ -119,16 +119,16 @@ class VersionableRepository<
     return await this.updateOne(conditions, dataToUpdate);
   }
 
-  public async findOne(conditions?: IConditions, projection: any = '*', options?: IOptions): DocumentQuery<D[], D> {
-    const finalConditions = this.getFinalConditions(conditions);
+  public async findOne(conditions?: IConditions, projection: any = '*', options?: IOptions) {
+    const finalConditions: any = this.getFinalConditions(conditions);
     const finalProjection = this.getFinalProjection(projection);
     const finalOptions = this.getFinalOptions(options);
     return await this.model.findOne(finalConditions, finalProjection, finalOptions);
   }
 
-  public async updateOne(conditions: IConditions, dataToUpdate: IData, options?: IOptions) {
-    const finalConditions = this.getFinalConditions(conditions);
-    const doc = await this.model.updateOne(finalConditions, dataToUpdate, options);
+  public async updateOne(conditions: IConditions, dataToUpdate: any, options?: IOptions) {
+    const finalConditions: any = this.getFinalConditions(conditions);
+    const doc: any = await this.model.updateOne(finalConditions, dataToUpdate, options);
 
     if (!doc) {
       throw {

@@ -19,4 +19,6 @@ const configuration: IConfig = Object.freeze({
   MULTER: multer({ storage: multer.memoryStorage() }),
 });
 
+console.log('configuration', configuration);
+
 export default configuration;

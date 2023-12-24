@@ -3,7 +3,7 @@ import { SchemaDefinition, SchemaOptions } from 'mongoose';
 import { VersionableSchema } from '../../versionable';
 
 class GrievanceSchema extends VersionableSchema {
-  constructor(options: SchemaOptions) {
+  constructor(options: SchemaOptions = {}) {
     const baseSchema: SchemaDefinition = {
       enrollmentId: String,
       placeOfIncident: String,

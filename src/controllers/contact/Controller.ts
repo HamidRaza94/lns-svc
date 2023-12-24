@@ -19,7 +19,7 @@ class ContactController {
 
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const { name, email, phone, limit, skip, projection } = req.query;
+      const { name, email, phone, limit, skip, projection } = req.query as any;
       const conditions: IContactConditions = filterDefinedObject({ name, email, phone });
       const options: IOptions = toInt({ limit, skip });
 

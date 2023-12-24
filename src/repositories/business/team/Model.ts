@@ -1,19 +1,14 @@
-import { SchemaOptions, Schema, Model, model } from 'mongoose';
+import { Schema, Model as MongoModel, model } from 'mongoose';
 
 import TeamSchema from './Schema';
 import ITeamModel from './IModel';
 
-const options: SchemaOptions = {
-  versionKey: false,
-};
+const schema: Schema = new TeamSchema();
 
-const schema: Schema = new TeamSchema(options);
-
-const TeamModel: Model<ITeamModel> = model<ITeamModel>(
+const Model: MongoModel<ITeamModel> = model<ITeamModel>(
   'Team',
   schema,
   'teams',
-  true
 );
 
-export default TeamModel;
+export default Model;

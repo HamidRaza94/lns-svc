@@ -34,12 +34,12 @@ class CenterController {
 
   public async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const { code, name, address, projection, limit, skip } = req.query;
+      const { code, name, address, projection, limit, skip } = req.query as any;
 
       const conditions: ICenterConditions = filterDefinedObject({ code, name, address });
       const options: IOptions = toInt({ limit, skip });
 
-      const result = await centerRepository.find(conditions, projection, options);
+      const result: any = await centerRepository.find(conditions, projection, options);
 
       if (!result.length) {
         throw SystemResponse.badRequestError(MESSAGE.FAILURE_RESPONSE.notFound);
@@ -56,7 +56,7 @@ class CenterController {
       const {
         params: { code },
         query: { limit, skip, projection },
-      } = req;
+      } = req as any;
 
       const conditions: ICenterConditions = { code };
       const options: IOptions = toInt({ limit, skip });

@@ -3,7 +3,7 @@ import { SchemaDefinition, SchemaOptions } from 'mongoose';
 import { VersionableSchema } from '../../versionable';
 
 class ContactSchema extends VersionableSchema {
-  constructor(options: SchemaOptions) {
+  constructor(options: SchemaOptions = {}) {
     const baseSchema: SchemaDefinition = {
       name: String,
       email: String,

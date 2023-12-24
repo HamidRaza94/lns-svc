@@ -27,7 +27,7 @@ class CourseController {
 
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
-      const { code, name, limit, skip, projection } = req.query;
+      const { code, name, limit, skip, projection } = req.query as any;
 
       const conditions: ICourseConditions = filterDefinedObject({ code, name });
       const options: IOptions = toInt({ limit, skip });
@@ -44,7 +44,7 @@ class CourseController {
       const {
         params: { code },
         query: { limit, skip, projection },
-      } = req;
+      } = req as any;
 
       const conditions: ICourseConditions = { code };
       const options: IOptions = toInt({ limit, skip });

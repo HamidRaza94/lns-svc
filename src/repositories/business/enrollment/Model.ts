@@ -1,15 +1,14 @@
-import { Schema, Model, model } from 'mongoose';
+import { Schema, Model as MongoModel, model } from 'mongoose';
 
 import EnrollmentSchema from './Schema';
 import IEnrollmentModel from './IModel';
 
 const schema: Schema = new EnrollmentSchema();
 
-const EnrollmentModel: Model<IEnrollmentModel> = model<IEnrollmentModel>(
+const Model: MongoModel<IEnrollmentModel> = model<IEnrollmentModel>(
   'enrollment',
   schema,
   'enrollments',
-  true,
 );
 
-export default EnrollmentModel;
+export default Model;

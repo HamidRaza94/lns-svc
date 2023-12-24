@@ -3,7 +3,7 @@ import { SchemaDefinition, SchemaOptions } from 'mongoose';
 import { VersionableSchema } from '../../versionable';
 
 class UpdateSchema extends VersionableSchema {
-  constructor(options: SchemaOptions) {
+  constructor(options: SchemaOptions = {}) {
     const updateSchema: SchemaDefinition = {
       type: String,
       headline: String,
