@@ -4,12 +4,11 @@
   "description": "Service for Lok Niyay Sansthan",
   "main": "index.js",
   "scripts": {
-    "prebuild": "npm run clean:build",
     "build": "tsc",
     "clean:build": "rimraf ./build",
     "nodemon": "nodemon ./build",
     "start": "npm run clean:build && tsc-watch --project . --onSuccess \"npm run nodemon\"",
-    "startup": "node ./dist/src/index.js"
+    "start:prod": "npm run clean:build && npm run build && node ./build/index.js"
   },
   "repository": {
     "type": "git",
