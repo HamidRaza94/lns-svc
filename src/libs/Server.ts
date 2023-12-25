@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
-// import multer from 'multer';
 import { config as cloudinaryConfig } from 'cloudinary';
 
 import { IConfig } from '../config';
@@ -28,6 +27,7 @@ class Server {
   private setupRoutes() {
     const { API_KEY } = this.config;
 
+    this.app.use((req: express.Request, _, next: express.NextFunction) => { console.log('incoming req ->', req.path); next() });
     this.app.use('/health-check', (_, res: express.Response) => { res.status(200).send('I am Good') });
     this.app.use(`/${API_KEY}`, router);
     this.app.use(notFoundRoute);

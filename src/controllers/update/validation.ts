@@ -9,7 +9,7 @@ export default {
   },
 
   read: {
-    type: validationRule.isIn.inParams(UPDATE_TYPE),
+    type: validationRule.isIn.inParams(UPDATE_TYPE, false),
     ...validationRule.limitSkip,
   },
 
