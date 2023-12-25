@@ -1,5 +1,5 @@
 interface IConfig {
-  PORT: string;
+  PORT: number;
   NODE_ENV: string;
   MONGO_URI: string;
   API_KEY: string;
