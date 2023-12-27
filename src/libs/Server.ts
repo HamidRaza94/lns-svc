@@ -1,7 +1,8 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
-import { config as cloudinaryConfig } from 'cloudinary';
+import * as cookieParser from 'cookie-parser';
+import { v2 as cloudinary } from 'cloudinary';
 
 import { IConfig } from '../config';
 import { notFoundRoute, errorHandler } from './routes';
@@ -17,6 +18,7 @@ class Server {
 
   public bootstrap(): this {
     this.initCors();
+    this.initCookie();
     this.initCloudinaryStorage();
     this.initBodyParser();
     this.setupRoutes();
@@ -58,11 +60,15 @@ class Server {
     this.app.use(bodyParser.json());
   }
 
+  private initCookie() {
+    this.app.use(cookieParser());
+  }
+
   private initCloudinaryStorage() {
     const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = this.config;
 
     this.app.use((_, __, next: express.NextFunction) => {
-      cloudinaryConfig({
+      cloudinary.config({ 
         cloud_name: CLOUDINARY_CLOUD_NAME,
         api_key: CLOUDINARY_API_KEY,
         api_secret: CLOUDINARY_API_SECRET,

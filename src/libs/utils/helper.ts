@@ -1,4 +1,4 @@
-const arrayMerger = (arr1, arr2, arr3, arr4) =>
+export const arrayMerger = (arr1, arr2, arr3, arr4) =>
   arr1.map(arr1Item => ({
     ...arr2.find(item => item.id === arr1Item.id && item),
     ...arr1Item,
@@ -6,7 +6,7 @@ const arrayMerger = (arr1, arr2, arr3, arr4) =>
     ...arr4.find(item => item.id === arr1Item.id && item),
   }));
 
-const filterDefinedObject = (obj: any) => {
+  export const filterDefinedObject = (obj: any) => {
   const filteredObj = {};
 
   for (const key in obj) {
@@ -18,7 +18,7 @@ const filterDefinedObject = (obj: any) => {
   return filteredObj;
 }
 
-const toInt = (data: any) => {
+export const toInt = (data: any) => {
   if (data && typeof data === 'number') {
     return data;
   } else {
@@ -39,4 +39,28 @@ const toInt = (data: any) => {
   }
 }
 
-export { arrayMerger, filterDefinedObject, toInt };
+const isObject = (value: any): boolean => {
+  return typeof value === 'object' &&
+    !Array.isArray(value) &&
+    value !== null;
+};
+
+interface IExtractFields {
+  [key: string]: any;
+}
+
+export const extractFields = (data: any, fields: string[]): IExtractFields => {
+  const newData = {};
+
+  if (!data ||!isObject(data)) {
+    return newData;
+  }
+
+  for (const key in data) {
+    if (fields.includes(key)) {
+      newData[key] = data[key];
+    }
+  }
+
+  return newData;
+};

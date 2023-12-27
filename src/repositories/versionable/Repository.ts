@@ -76,9 +76,9 @@ class VersionableRepository<
     return doc;
   }
 
-  public async find(conditions?: IConditions, projection: any = '*', options?: IOptions) {
+  public async find(conditions?: IConditions, projection: any = '*', options?: IOptions): Promise<any[]> {
     if (conditions && conditions.originalId) {
-      return this.findOne(conditions, projection.split(','), options);
+      return await this.findOne(conditions, projection.split(','), options);
     }
 
     const finalConditions: any = this.getFinalConditions(conditions);
@@ -119,7 +119,7 @@ class VersionableRepository<
     return await this.updateOne(conditions, dataToUpdate);
   }
 
-  public async findOne(conditions?: IConditions, projection: any = '*', options?: IOptions) {
+  public async findOne(conditions?: IConditions, projection: any = '*', options?: IOptions): Promise<any> {
     const finalConditions: any = this.getFinalConditions(conditions);
     const finalProjection = this.getFinalProjection(projection);
     const finalOptions = this.getFinalOptions(options);
