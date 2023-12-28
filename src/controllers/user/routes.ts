@@ -4,6 +4,8 @@ import config from '../../config';
 import validationHandler from '../../libs/routes/validationHandler';
 import userValidation from './validation';
 import userController from './Controller';
+import { authMiddleware } from '../../middlewares';
+import { ROLES } from '../../libs/constants';
 
 const { MULTER } = config;
 
@@ -14,6 +16,6 @@ router
   .post('/login', userController.login)
   .get('/:username', userController.getUser)
   .get('/', userController.getAllUsers)
-  .delete('/:id', userController.removeUser);
+  .delete('/:id', authMiddleware.authenticate, authMiddleware.authorize(ROLES.ADMIN), userController.removeUser);
 
 export default router;

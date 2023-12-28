@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt';
-import { sign, JwtPayload, SignOptions } from 'jsonwebtoken';
+import { sign, JwtPayload, SignOptions, verify } from 'jsonwebtoken';
 
 import config from '../../config';
 
@@ -37,4 +37,10 @@ export const generatedToken = (payload: JwtPayload) => {
   };
 
   return sign(payload, JWT_SECRET_KEY, settings);
+};
+
+export const verifyToken = (token: string) => {
+  const { JWT_SECRET_KEY } = config;
+
+  return verify(token, JWT_SECRET_KEY);
 };
