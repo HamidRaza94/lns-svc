@@ -12,8 +12,8 @@ const router = Router();
 router
   .post('/signup', MULTER.single('profile'), userController.signup)
   .post('/login', userController.login)
-  .get('/', userController.getAllUsers)
   .get('/:username', userController.getUser)
+  .get('/', userController.getAllUsers)
   .delete('/:id', userController.removeUser);
 
 export default router;
