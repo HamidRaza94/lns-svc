@@ -13,6 +13,7 @@ router
   .post('/signup', MULTER.single('profile'), userController.signup)
   .post('/login', userController.login)
   .get('/', userController.getAllUsers)
+  .get('/:username', userController.getUser)
   .delete('/:id', userController.removeUser);
 
 export default router;

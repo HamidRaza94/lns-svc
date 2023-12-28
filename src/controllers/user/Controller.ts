@@ -105,6 +105,27 @@ class UserController {
     }
   }
 
+  public async getUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username } = req.params;
+
+      const result = await userRepository.findOne({ username });
+
+      if (!result) {
+        throw {
+          error: 'E107',
+          message: 'User does not correct',
+          status: 404,
+        };
+      }
+
+      return res.status(200).send(successHandler('User successfully fetched', 200, result));
+    } catch (err) {
+      console.error('UserController :: getAllUsers ::', err);
+      next(err);
+    }
+  }
+
   public async removeUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
