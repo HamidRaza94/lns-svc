@@ -108,6 +108,7 @@ class UserController {
   public async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { username } = req.params;
+      console.log('getUser invoked by', username);
 
       const result = await userRepository.findOne({ username });
 
