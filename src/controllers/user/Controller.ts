@@ -121,7 +121,7 @@ class UserController {
 
       return res.status(200).send(successHandler('User successfully fetched', 200, result));
     } catch (err) {
-      console.error('UserController :: getAllUsers ::', err);
+      console.error('UserController :: getUser ::', err);
       next(err);
     }
   }
