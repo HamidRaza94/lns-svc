@@ -31,7 +31,7 @@ class UserController {
         }
       }
 
-      const [hashedPassword, cloudinaryRes] = await Promise.all([generateHash(password), uploadFile(profile)]);
+      const [hashedPassword, cloudinaryRes] = await Promise.all([generateHash(password), uploadFile(profile, 'profile')]);
       const { secure_url: profileURL, public_id: profilePublicId } = cloudinaryRes;
 
       const userData = {
@@ -108,7 +108,6 @@ class UserController {
   public async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { username } = req.params;
-      console.log('getUser invoked by', username);
 
       const result = await userRepository.findOne({ username });
 
@@ -142,12 +141,7 @@ class UserController {
       }
 
       await userRepository.delete({ originalId: id });
-
-      try {
-        deleteFile(result.profilePublicId);
-      } catch (err) {
-        console.error(err);
-      }
+      deleteFile(result.profilePublicId).catch((err) => console.error(err));
 
       return res.status(200).send(successHandler('User successfully deleted', 200, result));
     } catch (err) {

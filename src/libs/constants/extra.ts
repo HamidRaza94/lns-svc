@@ -11,3 +11,7 @@ export enum USER_TYPES {
   ADMIN = 'admin',
   MEMBER = 'member',
 };
+
+export enum IMAGE_TYPES {
+  gallery = 'gallery',
+}

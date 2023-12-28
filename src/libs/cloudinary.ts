@@ -1,8 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-export const uploadFile = async (file: any) => {
+export const uploadFile = async (file: any, folderName: string) => {
   try {
-    return await cloudinary.uploader.upload(file, { folder: 'profile' });
+    return await cloudinary.uploader.upload(file, { folder: folderName });
   } catch (err) {
     console.error('cloudinary :: uploadFile', err);
     throw {
