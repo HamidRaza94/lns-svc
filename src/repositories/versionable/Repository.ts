@@ -19,7 +19,7 @@ class VersionableRepository<
     if (!projection) {
       return ['-_id'];
     } else if (projection.length && !projection.includes('*')) {
-      return [ ...projection, '-_id', 'originalId' ];
+      return [ ...projection, '-_id' ];
     }
 
     return [];
@@ -37,7 +37,7 @@ class VersionableRepository<
     return await this.model.countDocuments();
   }
 
-  public async create(data: IData) {
+  public async create(data: IData): Promise<any> {
     const id = VersionableRepository.generateObjectId();
 
     const modelModified = new this.model({ _id: id, originalId: id, ...data });

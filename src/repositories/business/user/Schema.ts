@@ -41,13 +41,17 @@ class UserSchema extends VersionableSchema {
         type: String,
         enum: USER_TYPES,
         default: USER_TYPES.MEMBER,
-        required: true,
+        required: false,
       },
       designation: {
         type: String,
         required: false,
       },
       profile: {
+        type: String,
+        required: false,
+      },
+      profilePublicId: {
         type: String,
         required: false,
       },

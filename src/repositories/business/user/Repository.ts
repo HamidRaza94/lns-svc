@@ -6,7 +6,7 @@ import UserModel from './Model';
 import { IUserData, IUserConditions } from './IQuery';
 import { IOptions } from '../../entities';
 
-class EnrollmentRepository extends VersionableRepository<
+class UserRepository extends VersionableRepository<
   IUserModel,
   Model<IUserModel>,
   IUserData,
@@ -17,12 +17,16 @@ class EnrollmentRepository extends VersionableRepository<
     super(UserModel);
   }
 
-  public async create(data: IUserData) {
-    return super.create(data);
+  public async create(data: IUserData): Promise<Partial<IUserModel>> {
+    const result = await super.create(data);
+
+    const { password, ...restData } = result;
+
+    return restData;
   }
 
-  public read(conditions?: IUserConditions, projection?: [string], options?: IOptions) {
-    return super.find(conditions, projection, options);
+  public async read(conditions?: IUserConditions, options?: IOptions) {
+    return await super.find(conditions, '-password', options);
   }
 
   public update(conditions: IUserConditions, dataToUpdate: IUserData, options?: IOptions) {
@@ -34,4 +38,4 @@ class EnrollmentRepository extends VersionableRepository<
   }
 }
 
-export default new EnrollmentRepository();
+export default new UserRepository();

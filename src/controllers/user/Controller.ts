@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { successHandler, MESSAGE } from '../../libs';
 import { generateHash, compareHash, generatedToken } from '../../libs/utils/encrypt';
-import { uploadFile } from '../../libs/cloudinary';
+import { uploadFile, deleteFile } from '../../libs/cloudinary';
 import { userRepository } from '../../repositories';
 
 class UserController {
@@ -31,24 +31,25 @@ class UserController {
         }
       }
 
-      const [hashedPassword, { secure_url: profileURL }] = await Promise.all([generateHash(password), uploadFile(profile)]);
+      const [hashedPassword, cloudinaryRes] = await Promise.all([generateHash(password), uploadFile(profile)]);
+      const { secure_url: profileURL, public_id: profilePublicId } = cloudinaryRes;
 
       const userData = {
         firstName,
         lastName,
         role,
         username,
-        password: hashedPassword,
         type,
         designation,
         message,
         contacts: contacts ? JSON.parse(contacts) : [],
         profile: profileURL,
+        profilePublicId,
       };
 
-      await userRepository.create(userData);
+      await userRepository.create({ ...userData, password: hashedPassword });
 
-      res.status(201).send(successHandler(`User ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, { firstName, lastName, role, username }));
+      res.status(201).send(successHandler(`User ${MESSAGE.SUCCESS_RESPONSE.create}`, 201, userData));
     } catch (err) {
       console.error('UserController :: signup ::', err);
       next(err);
@@ -100,6 +101,35 @@ class UserController {
       return res.status(200).send(successHandler('User successfully fetched', 200, result));
     } catch (err) {
       console.error('UserController :: getAllUsers ::', err);
+      next(err);
+    }
+  }
+
+  public async removeUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      const result = await userRepository.findOne({ originalId: id });
+
+      if (!result) {
+        throw {
+          error: 'E107',
+          message: 'User does not correct',
+          status: 404,
+        };
+      }
+
+      await userRepository.delete({ originalId: id });
+
+      try {
+        deleteFile(result.profilePublicId);
+      } catch (err) {
+        console.error(err);
+      }
+
+      return res.status(200).send(successHandler('User successfully deleted', 200, result));
+    } catch (err) {
+      console.error('UserController :: removeUser ::', err);
       next(err);
     }
   }
